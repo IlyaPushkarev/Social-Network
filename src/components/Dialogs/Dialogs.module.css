@@ -1,0 +1,39 @@
+.dialogs{
+    color: burlywood;
+    display: grid;
+    grid-template-columns: 3fr 9fr;
+    height: 100%;
+
+}
+.dialogsItems{
+    padding: 10px;
+    border-right: 1px solid black;
+    background-color: #4e2674;
+}
+
+.dialogsItems .active{
+    color: red;
+}
+
+.correspondence{
+    padding: 10px;
+    background-color: #6c409c;
+}
+
+.messageNew{
+    display: flex;
+    flex-direction: column;
+    /*width: 100%;*/
+    padding: 10px;
+}
+
+textarea{
+    min-height: 20vh;
+    border: 1px solid #330066;
+    margin-bottom: 5vh;
+    background-color: #ae74ea;
+    color: burlywood;
+    font-size: 1.5rem;
+    resize: none;
+    outline: none;
+}

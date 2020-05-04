@@ -1,0 +1,27 @@
+.header{
+    grid-area: h;
+    background-color: #330066;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 2vmin;
+}
+
+.logoWrapper{
+    display: flex;
+    align-items: center;
+}
+.logoWrapper img{
+    width: 40px;
+}
+
+.logoWrapper h1{
+    font-size: 2.2rem;
+}
+
+.loginBlock{
+    color: white;
+}
+.loginBlock a{
+    color: white;
+}

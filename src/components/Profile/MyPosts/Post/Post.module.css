@@ -1,0 +1,29 @@
+.item{
+    color: burlywood;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2vmin;
+}
+.item:last-child{
+    margin-bottom: 0;
+}
+.item img{
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    margin: 0 1vw 0 0.5vw;
+    cursor: pointer;
+}
+
+.estimate{
+    align-self: flex-end;
+    margin: 0 0.5vw 0 auto;
+}
+
+.estimate>span:first-child{
+    margin-right: 1.5vw;
+}
+.estimate span:hover{
+    cursor: pointer;
+}

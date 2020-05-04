@@ -1,0 +1,48 @@
+.posts{
+    width: 100%;
+}
+.postsBlock{
+    padding-left: 10px;
+}
+
+.postNew{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    margin: 0 auto 5vmin;
+}
+
+.header{
+    background-color: #660066;
+    color: burlywood;
+    font-size: 2rem;
+    text-align: center;
+    margin-bottom: 3vmin;
+}
+
+.postNew__body{
+    display: flex;
+    flex-direction: column;
+}
+
+.postNew__body textarea{
+    min-height: 20vh;
+    /*border: 1px solid #330066;*/
+    margin-bottom: 5vh;
+    background-color: #ae74ea;
+    color: burlywood;
+    font-size: 1.5rem;
+    resize: none;
+    outline: none;
+    border: none;
+    width: 80%;
+    margin: 0 auto;
+}
+
+/*OLD POSTS*/
+.postsOld{
+    width: 100%;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+}

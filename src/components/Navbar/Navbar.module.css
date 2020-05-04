@@ -1,0 +1,28 @@
+.nav{
+    grid-area: n;
+    background-color: #681c87;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    overflow: hidden;
+}
+
+.item{
+    width: 100%;
+    border-bottom: 1px solid #330066;
+    padding: 10px 0px;
+    text-align: center;
+}
+
+.item:hover{
+    transform: scale(1.1);
+}
+.item a{
+    color: white;
+    text-decoration: none;
+}
+
+.item a.active{
+    color: burlywood;
+}

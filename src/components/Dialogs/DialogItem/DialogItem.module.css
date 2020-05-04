@@ -1,0 +1,27 @@
+.dialog{
+    position: relative;
+    padding-left: 30px;
+    margin-bottom: 3vh;
+}
+.dialog a{
+    color: burlywood;
+    text-decoration: none;
+}
+
+.dialog.active a {
+    color: red;
+
+}
+.dialog:last-child{
+    margin-bottom: 0;
+}
+.dialog::before{
+    position: absolute;
+    content: "";
+    left: -5px;
+    top: 0;
+    width: 20px;
+    height: 20px;
+    border: 1px solid red;
+    border-radius: 50%;
+}

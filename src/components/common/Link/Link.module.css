@@ -1,0 +1,24 @@
+.link {
+    color:white;
+    line-height: 1.2;
+    position: relative;
+    padding: 2vmin 5vmin;
+    text-transform: uppercase;
+    text-decoration: none;
+    z-index: 5;
+}
+.link:after {
+    content: "";
+    height: 100%;
+    min-width: 4px;
+    background-color: #681c87;
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    transition: .5s;
+}
+.link:hover:after {
+    min-width: 100%;
+    background-color: #681c87;
+    opacity: 0.9;
+}

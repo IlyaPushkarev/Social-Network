@@ -1,0 +1,85 @@
+.userProfileInfo{
+    width: 100%;
+
+}
+.userProfileDescription{
+    width: 100%;
+    margin: 0 auto;
+    word-break: break-word;
+}
+.userProfileDescription__header{
+    background-color: #660066;
+    color: burlywood;
+    font-size: 2rem;
+    text-align: center;
+    margin-bottom: 3vmin;
+
+}
+.userProfileDescription__body{
+    display: flex;
+    justify-content: space-between;
+    padding: 5px;
+}
+.userAvatar{
+
+    margin-right: 10px;
+    text-align: center;
+    flex-grow: 1;
+    flex-shrink: 1;
+}
+:root{
+    --userProfilePhotoWidth: 30vh;
+}
+.userAvatar img{
+    width:15vmax;
+    height: 15vmax;
+    border-radius: 10%;
+    margin: 0 auto;
+
+
+}
+.userInfo{
+    flex-grow: 3;
+    flex-shrink: 1;
+
+}
+.userInfo__item{
+    padding: 5px 10px;
+    margin-bottom: 2vh;
+}
+
+.userInfo__item > span:first-child{
+    font-weight: 700;
+    text-transform: uppercase;
+}
+
+.userInfo__userName{
+
+
+}
+.userInfo__about{
+
+
+}
+.userInfo__contact {
+
+}
+
+.contactWrapper{
+    margin: 1vh 0;
+    display: flex;
+}
+.contactWrapper span{
+    display: block;
+    word-break: normal;
+}
+.contact__name{
+    margin-left: 1vw;
+    margin-right: 1vw;
+    text-transform: uppercase;
+    font-weight: 500;
+}
+.contact__value a{
+    color: burlywood;
+    text-decoration: none;
+}

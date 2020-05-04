@@ -1,0 +1,121 @@
+.users{
+    background-color: #9966CC;
+    color: burlywood;
+    height: 100%;
+    padding: 2vmin;
+}
+.usersContainer{
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+.userBox{
+    width: 49%;
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 2vmin;
+    padding: 2vmin;
+    word-break: break-word;
+    background-color: #423189;
+}
+
+.subscriptionWrapper{
+    text-align: center;
+}
+.userBox__photo{
+
+}
+.userBox__photo img{
+    width: 10vmax;
+    height: 10vmax;
+    flex-grow: 1;
+    flex-shrink: 1;
+    border-radius: 10%;
+    margin-bottom: 2vmin;
+}
+.userBox__btn{
+    text-align: center;
+    color: white;
+}
+.userBox__btn button{
+    min-width: 120px;
+}
+.userBox__description{
+    flex-grow: 1;
+    flex-shrink: 1;
+    padding-left: 20%;
+}
+.description__item{
+    margin-bottom: 2vmin;
+}
+
+.description__item span{
+    font-weight: 700;
+    text-transform: uppercase;
+}
+
+.numeration{
+    color: white;
+    margin: 0 auto;
+    text-align: center;
+}
+.numeration span{
+    font-size: 1.5rem;
+    padding-left: 1vmin;
+    text-align: center;
+    border-bottom: 3px solid transparent;
+}
+
+.numeration span:hover{
+    border-bottom: 3px solid burlywood;
+    cursor: pointer;
+}
+.selectedPage{
+    color: burlywood;
+    font-weight: bold;
+}
+@media screen and (max-width: 1200px) {
+    .userBox__description{
+        flex-grow: 1;
+        flex-shrink: 1;
+        padding-left: 15%;
+    }
+}
+
+@media screen and (max-width: 900px) {
+    .userBox__description{
+        padding-left: 10%;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .userBox{
+        flex-direction: column;
+
+    }
+    .userBox__description{
+        padding-left: 5%;
+        align-self: flex-start;
+        order: 1;
+    }
+    .userBox__photo img{
+        width: 20vmax;
+        height: 20vmax;
+    }
+    .subscriptionWrapper{
+        order: 2;
+    }
+}
+@media screen and (max-width: 600px) {
+    .userBox{
+        width: 100%;
+        flex-direction: row;
+
+    }
+    .userBox__description{
+        order: 2;
+    }
+    .subscriptionWrapper{
+        order: 1;
+    }
+}
