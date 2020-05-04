@@ -73,8 +73,8 @@ let mapStateToProps = (state) => {
     }
 }*/
 
-
-/*export default connect(mapStateToProps, {/!*Ссылки на функцию(объект) action creator (AC)*!/
+/*
+export default connect(mapStateToProps, {/!*Ссылки на функцию(объект) action creator (AC)*!/
     follow: followThunkCreator,
     unfollow: unfollowThunkCreator,
     setCurrentPage: setCurrentPageAC,
@@ -85,7 +85,7 @@ let mapStateToProps = (state) => {
 
 export default compose(
 
-    withAuth,
+    // withAuth,
     connect(mapStateToProps, {/*Ссылки на функцию(объект) action creator (AC)*/
         follow: followThunkCreator,
         unfollow: unfollowThunkCreator,

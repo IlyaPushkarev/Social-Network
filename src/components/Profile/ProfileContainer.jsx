@@ -38,7 +38,7 @@ export default compose(
         getUserProfile: getUserProfileThunkCreator,
     }),
     withRouter,
-    withAuth
+    // withAuth
 )(ProfileContainer)
 /*
 
