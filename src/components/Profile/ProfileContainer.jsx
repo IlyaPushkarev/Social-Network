@@ -1,7 +1,11 @@
 import React from "react";
 import Profile from "./Profile";
 import {connect} from "react-redux";
-import {getUserProfileThunkCreator} from "../../redux/profile-reducer";
+import {
+    getUserProfileStatusTC,
+    getUserProfileThunkCreator,
+    updateUserProfileStatusTC
+} from "../../redux/profile-reducer";
 import {withRouter} from "react-router-dom";
 import {withAuth} from "../HOC/withAuth/withAuth";
 import {compose} from "redux";
@@ -12,9 +16,12 @@ class ProfileContainer extends React.Component{
 
         let userId = this.props.match.params.userId;
         if(!userId){
-            userId =`2`;
+            userId =`7701`;
         }
         this.props.getUserProfile(userId);
+        this.props.getUserStatus(userId);
+
+
     }
 
     render() {
@@ -30,25 +37,27 @@ class ProfileContainer extends React.Component{
 let mapStateToProps = (state)=>{
     return {
         profile: state.profilePage.profile,
+        status: state.profilePage.status,
     }
 }
 
 export default compose(
     connect(mapStateToProps,{
         getUserProfile: getUserProfileThunkCreator,
+        getUserStatus: getUserProfileStatusTC,
+        updateUserStatus: updateUserProfileStatusTC,
     }),
     withRouter,
     // withAuth
 )(ProfileContainer)
+
 /*
-
 let ProfileWithAuth = withAuth(ProfileContainer)/!*isAuth приходит в props*!/
-
-
 
 let WithUrlDataContainerComponent = withRouter(ProfileWithAuth);/!*Что бы получить данные из URL*!/
 
 export default connect(mapStateToProps, {
 
     getUserProfile: getUserProfileThunkCreator,
-})(WithUrlDataContainerComponent);*/
+})(WithUrlDataContainerComponent);
+*/

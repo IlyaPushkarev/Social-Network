@@ -9,11 +9,13 @@ let posts = [
 const ADD_POST = 'ADD-POST';
 const UPDATE_NEW_POST_TEXT = 'UPDATE-NEW-POST-TEXT';
 const SET_USER_PROFILE = "SET-USER-PROFILE";
+const SET_USER_STATUS = "SET-USER-STATUS";
 
 let initialState = {
     posts,
-    newTextPost: "it-camasutra.com",
+    newTextPost: "Insert your post",
     profile: null,
+    status: "Status is loading"
 }
 
 const profileReducer = (state = initialState, action) => {
@@ -46,6 +48,13 @@ const profileReducer = (state = initialState, action) => {
                 profile: action.profile
             }
         }
+
+        case SET_USER_STATUS: {
+            return {
+                ...state,
+                status: action.userStatus
+            }
+        }
         default:
             return state;
     }
@@ -76,9 +85,42 @@ export const getUserProfileThunkCreator = (userId)=>{
         profileAPI.getUserProfile(userId)
             .then(response=>response.data)
             .then(data=>{
+                // debugger
                 dispatch(setUserProfile(data));
             })
     }
+}
+
+export const setUserStatus = (userStatus)=>{
+    return {
+        type:SET_USER_STATUS,
+        userStatus
+    }
+}
+
+export const getUserProfileStatusTC = (userId)=>{
+  return (dispatch)=>{
+        profileAPI.getUserStatus(userId)
+            .then(data=>{
+                // debugger;
+                let status = data.data;
+                dispatch(setUserStatus(status))
+            })
+  }
+}
+
+export const updateUserProfileStatusTC = (status)=>{
+  return (dispatch)=>{
+        profileAPI.updateUserStatus(status)
+            .then(response=>{
+                // debugger;
+                if(response.data.resultCode == 0){
+                    let status = response.config.status;
+                    dispatch(setUserStatus(status))
+                }
+
+            })
+  }
 }
 
 export default profileReducer;

@@ -1,0 +1,36 @@
+.statusPanel{
+    display: inline-block;
+    position: relative;
+}
+
+.statusPanel__editor{
+    width: 20vmax;
+    position: absolute;
+    padding: 2vmin;
+    text-align: center;
+    background-color: #7f5da5;
+}
+.statusPanel__editor input{
+    width: 100%;
+    margin-bottom: 2vmin;
+    padding: 2px;
+    background-color: #8972a8;
+    color: burlywood;
+    border: none;
+    outline: none;
+}
+
+.statusPanel__display{
+    cursor: pointer;
+}
+
+
+.unselectable {
+    -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none;   /* Chrome/Safari/Opera */
+    -khtml-user-select: none;    /* Konqueror */
+    -moz-user-select: none;      /* Firefox */
+    -ms-user-select: none;       /* Internet Explorer/Edge */
+    user-select: none;           /* Non-prefixed version, currently
+                                  not supported by any browser */
+}

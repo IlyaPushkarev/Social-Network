@@ -14,7 +14,7 @@ const Profile = (props)=>{
     return (
         <div className={classes.content}>
             <section className={classes.profile}>
-            <ProfileInfo profile={props.profile}/>
+            <ProfileInfo profile={props.profile} {...props}/>
             <MyPostsContainer />
             </section>
         </div>

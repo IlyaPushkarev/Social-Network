@@ -8,10 +8,10 @@ export const usersAPI = {
     },
 
     follow: (userId) => {
-        return API.post(`https://social-network.samuraijs.com/api/1.0/follow/${userId}`)
+        return API.post(`follow/${userId}`)
     },
 
     unfollow: (userId) => {
-        return API.delete(`https://social-network.samuraijs.com/api/1.0/follow/${userId}`)
+        return API.delete(`follow/${userId}`)
     }
 }

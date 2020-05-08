@@ -1,5 +1,6 @@
 import React from "react";
 import classes from "./ProfileInfo.module.css";
+import ProfileStatus from "./ProfileStatus/ProfileStatus"
 
 const ProfileInfo = (props) => {
     if (!props.profile) {
@@ -12,13 +13,6 @@ const ProfileInfo = (props) => {
         for (let contact in obj) {
 
             if (obj[contact]) {
-                /*
-                                let div = document.createElement("div");
-                                div.classList.add("contact");
-
-                                div.innerHTML = `<span class="contact__name">${contact}</span
-                                                  <span className="classes.contact__value">${obj[contact]}</span>`*/
-
                 fragment.push({
                     name: contact,
                     value: obj[contact],
@@ -40,6 +34,9 @@ const ProfileInfo = (props) => {
                         <img src={props.profile.photos.large} alt=""/>
                     </div>
                     <div className={classes.userInfo}>
+                        <div className={classes.userInfo__userName}>
+                            <div className={classes.userInfo__item}><span>Status: </span> <ProfileStatus status={props.status} updateUserStatus={props.updateUserStatus}/> </div>
+                        </div>
                         <div className={classes.userInfo__userName}>
                             <div className={classes.userInfo__item}><span>Username: </span>{props.profile.fullName}</div>
                         </div>
