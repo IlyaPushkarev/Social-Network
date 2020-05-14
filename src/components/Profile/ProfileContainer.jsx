@@ -7,7 +7,7 @@ import {
     updateUserProfileStatusTC
 } from "../../redux/profile-reducer";
 import {withRouter} from "react-router-dom";
-import {withAuth} from "../HOC/withAuth/withAuth";
+// import {withAuth} from "../HOC/withAuth/withAuth";
 import {compose} from "redux";
 
 

@@ -27,7 +27,7 @@ class ProfileStatus extends React.Component {
 
     onStatusChange = (e)=>{
         this.setState({
-            status: e.currentTarget.value
+            status: e.target.value
 
         })
     }
@@ -55,7 +55,7 @@ class ProfileStatus extends React.Component {
                         <Button text={"ADD status"}/>
                     </div>
                     : <div className={[classes["statusPanel__display"],classes["unselectable"]].join(" ")}>
-                        <span  onClick={this.activateEditMove}>{ this.props.status }</span>
+                        <span  onClick={this.activateEditMove}>{ this.state.status }</span>
                     </div>
                 }
 

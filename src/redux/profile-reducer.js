@@ -115,7 +115,8 @@ export const updateUserProfileStatusTC = (status)=>{
             .then(response=>{
                 // debugger;
                 if(response.data.resultCode == 0){
-                    let status = response.config.status;
+                    let status = JSON.parse(response.config.data).status;
+                    // debugger;
                     dispatch(setUserStatus(status))
                 }
 
