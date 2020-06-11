@@ -1,11 +1,9 @@
 import React from "react";
 import classes from "./Dialogs.module.css";
-// import {NavLink} from "react-router-dom";
 import DialogItem from "./DialogItem/DialogItem";
 import Message from "./Message/Message";
-import {addMessageActionCreator, changeTextareaActionCreator} from "../../redux/dialogs-reducer";
-import Button from "../common/Button/Button";
 import {Redirect} from "react-router-dom";
+import MessageForm from "../Forms/MessageForm/MessageForm";
 
 
 const Dialogs = (props) => {
@@ -14,17 +12,11 @@ const Dialogs = (props) => {
 
     let messagesElements = props.messages.map((m,i) => <Message message={m.message} key={m.id}/>);
 
-    let newMessageElem = React.createRef();
-
-    let onChangeTextarea = ()=>{
-        let message = newMessageElem.current.value;
-        props.updateNewMessageText(message)
-
+    let onSendMessage = (formData)=>{
+        props.addMessage(formData.newMessage);
+        formData.newMessage = "";
     }
-    let onAddMessage = ()=>{
-        props.addMessage();
-        // props.dispatch(addMessageActionCreator())
-    }
+
 
     if(!props.isAuth){
         return (
@@ -46,10 +38,15 @@ const Dialogs = (props) => {
 
                 <div className={classes.messageNew}>
 
-
+{
+                           /*
                             <textarea ref={newMessageElem} onChange={onChangeTextarea} value={props.newTextMessage}></textarea>
-                            {/*<button onClick={onAddMessage}>Send</button>*/}
+                            <button onClick={onAddMessage}>Send</button>
                             <Button onClick={onAddMessage} text={"SEND"}/>
+                            */
+}
+                            <MessageForm onSubmit = {onSendMessage}
+                            />
                 </div>
             </div>
 

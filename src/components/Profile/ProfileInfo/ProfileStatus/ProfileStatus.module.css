@@ -1,9 +1,10 @@
 .statusPanel{
     display: inline-block;
-    position: relative;
+    position: absolute;
 }
 
 .statusPanel__editor{
+    position: absolute;
     width: 20vmax;
     position: absolute;
     padding: 2vmin;

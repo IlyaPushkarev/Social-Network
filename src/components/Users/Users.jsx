@@ -4,8 +4,7 @@ import userPhoto from "../../assets/images/userMalePhoto.jpg"
 import {NavLink} from "react-router-dom";
 import Button from "../common/Button/Button";
 import Preloader from "../common/Preloader/Preloader";
-import * as axios from "axios";
-import {usersAPI} from "../../api/usersAPI";
+
 
 let Users = (props) => {
 
@@ -28,7 +27,7 @@ let Users = (props) => {
                                     <div className={classes.userBox__photo}>
                                         <NavLink to={'/profile/' + u.id}>
                                             <img src={u.photos.small != null ? u.photos.small : userPhoto}
-                                            />
+                                                  alt={"User"}/>
                                         </NavLink>
                                     </div>
 
@@ -64,7 +63,7 @@ let Users = (props) => {
             </div>
             {<div className={classes.numeration}>
                 {pages.map(p => {
-                    return <span className={props.currentPage == p ? classes.selectedPage : ""}
+                    return <span className={props.currentPage === p ? classes.selectedPage : ""}
                                  onClick={(e) => {
                                      props.onPageChanged(p)
                                  }}

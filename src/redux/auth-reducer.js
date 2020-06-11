@@ -1,6 +1,8 @@
-import {authAPI} from "../api/authAPI";
+import {loginAPI} from "../api/loginAPI";
+import {stopSubmit} from "redux-form";
 
 let SET_USER_DATA = "SET-USER-DATA";
+
 let initialState = {
     id: null,
     email: null,
@@ -16,7 +18,6 @@ const authReducer = (state = initialState, action)=>{
             return {
                 ...state,
                 ...action.data,
-                isAuth: true,
             };
 
         default:
@@ -24,26 +25,57 @@ const authReducer = (state = initialState, action)=>{
 
     }
 }
-export const setAuthUserData = (userId, email, login)=>{
+export const setAuthUserData = (userId, email, login, isAuth,)=>{
     return {
         type: SET_USER_DATA,
         data:{
-            userId,
+            id: userId,
             email,
-            login
+            login,
+            isAuth,
         }
     }
 }
 
-export const  authorizeThunkCreator = ()=>{
+export const getAuthUserData = ()=>{
     return (dispatch)=>{
-        authAPI.auth()
+        return loginAPI.getAuthUserData()
+            .then(res=>{
+                // debugger
+                let {id, email, login} = {...res.data.data};
+                dispatch(setAuthUserData(id, email, login, true));
+            })
+    }
+
+
+}
+export const  loginTC = (login, password, rememberMe)=>{
+    return (dispatch)=>{
+
+
+        loginAPI.login(login, password, rememberMe)
             .then(response=>{
+                // debugger
+                if(response.data.resultCode === 0){
 
-                if(response.data.resultCode == 0){
-                    let {id,email, login} = response.data.data;
+                    dispatch(getAuthUserData())
+                }else{
+                    let mes = response.data.messages.length > 0 ? response.data.messages[0] : "Some error"
+                    dispatch(stopSubmit("login",{_error: mes}))
+                }
+            })
+            .catch(err=>console.error(err))
+    }
+}
 
-                    dispatch(setAuthUserData(id,email,login));
+export const  logoutTC = ()=>{
+    return (dispatch)=>{
+        loginAPI.logout()
+            .then(response=>{
+                // debugger
+                if(response.data.resultCode === 0){
+                     // dispatch(setAuth(false, null));
+                     dispatch(setAuthUserData(null, null, null, false))
                 }
             })
             .catch(err=>console.error(err))

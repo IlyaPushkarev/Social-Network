@@ -3,6 +3,7 @@ import classes from "./Header.module.css";
 import {NavLink} from "react-router-dom";
 
 const Header = (props)=>{
+
     return (
         <header className={classes.header}>
             <div className={classes.logoWrapper}>
@@ -12,12 +13,15 @@ const Header = (props)=>{
 
 
             <div className={classes.loginBlock} >
-                <p >
-                    {props.isAuth
-                    ? props.login
+                <div >
+                    {props.auth.isAuth
+                    ? <div>
+                            <div>{props.auth.login}</div>
+                            <div><button onClick={props.logout}>Logout</button></div>
+                    </div>
                     :<NavLink to={"/login"}>Login</NavLink >}
 
-                </p>
+                </div>
             </div>
         </header>
     )

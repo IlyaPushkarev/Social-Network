@@ -1,0 +1,12 @@
+.wrapper_loginForm{
+    width: 80%;
+    margin: 0 auto;
+    background-color: #9966CC;
+}
+.loginForm__header{
+    background-color: #660066;
+    color: burlywood;
+    font-size: 2rem;
+    text-align: center;
+    margin-bottom: 3vmin;
+}

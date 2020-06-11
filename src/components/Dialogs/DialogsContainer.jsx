@@ -1,5 +1,5 @@
-import React from "react";
-import {addMessageActionCreator, changeTextareaActionCreator} from "../../redux/dialogs-reducer";
+// import React from "react";
+import {addMessageActionCreator} from "../../redux/dialogs-reducer";
 import Dialogs from "./Dialogs";
 import {connect} from "react-redux";
 import {withAuth} from "../HOC/withAuth/withAuth";
@@ -16,19 +16,16 @@ let mapStateToProps = (state)=>{
 }
 let mapDispatchToProps = (dispatch)=>{
     return {
-        updateNewMessageText: (message)=>{
-            dispatch(changeTextareaActionCreator(message));
-        },
-        addMessage: ()=>{
-            dispatch(addMessageActionCreator())
+        addMessage: (newMessage)=>{
+            dispatch(addMessageActionCreator(newMessage))
         }
     }
 }
 
-compose(
+/*compose(
     connect(mapStateToProps, mapDispatchToProps),
     withAuth,
-)(Dialogs);
+)(Dialogs);*/
 
 export default compose(
     connect(mapStateToProps, mapDispatchToProps),

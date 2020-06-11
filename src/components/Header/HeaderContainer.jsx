@@ -2,25 +2,12 @@ import React from "react";
 import Header from "./Header";
 import {connect} from "react-redux";
 
-import {authorizeThunkCreator, setAuthUserData} from "../../redux/auth-reducer";
-import {authAPI} from "../../api/authAPI";
-
-
+import {loginTC, logoutTC, setAuthUserData} from "../../redux/auth-reducer";
 
 class HeaderContainer extends React.Component{
 
     componentDidMount() {
-        /*authAPI.auth()
-            .then(response=>{
-
-                if(response.data.resultCode == 0){
-                    let {id,email, login} = response.data.data;
-
-                    this.props.setAuthUserData(id,email,login)
-                }
-            })*/
-
-        this.props.authorize();
+        // this.props.login();
     }
 
     render(){
@@ -29,8 +16,7 @@ class HeaderContainer extends React.Component{
 }
 let mapStateToProps = (state)=>{
     return{
-        isAuth: state.auth.isAuth,
-        login: state.auth.login
+        auth: state.auth,
     }
 }
 let mapDispatchToProps = (dispatch)=>{
@@ -38,8 +24,11 @@ let mapDispatchToProps = (dispatch)=>{
         setAuthUserData: (userId, email, login)=>{
             dispatch(setAuthUserData(userId, email, login));
         },
-        authorize: ()=>{
-            dispatch(authorizeThunkCreator());
+        login: ()=>{
+            dispatch(loginTC());
+        },
+        logout: ()=>{
+            dispatch(logoutTC())
         }
     }
 }

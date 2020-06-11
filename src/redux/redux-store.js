@@ -6,17 +6,18 @@ import usersReducer from "./users-reducer";
 import newsReducer from "./news-reducer";
 import authReducer from "./auth-reducer";
 import thunkMiddleware from "redux-thunk";
-
+import { reducer as formReducer } from 'redux-form';
+import appReducer from "./app-reducer";
 let reducers = combineReducers({
+    app: appReducer,
     profilePage: profileReducer,
     messagesPage: dialogsReducer,
     navBar: navBarReducer,
     usersPage: usersReducer,
     newsPage: newsReducer,
-    auth: authReducer
+    auth: authReducer,
+    form: formReducer
 });
 let store = createStore(reducers,applyMiddleware(thunkMiddleware));
-
 window.store = store;
-
 export default store;

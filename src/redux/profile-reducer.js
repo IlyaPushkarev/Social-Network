@@ -7,13 +7,11 @@ let posts = [
 ];
 
 const ADD_POST = 'ADD-POST';
-const UPDATE_NEW_POST_TEXT = 'UPDATE-NEW-POST-TEXT';
 const SET_USER_PROFILE = "SET-USER-PROFILE";
 const SET_USER_STATUS = "SET-USER-STATUS";
 
 let initialState = {
     posts,
-    newTextPost: "Insert your post",
     profile: null,
     status: "Status is loading"
 }
@@ -23,7 +21,7 @@ const profileReducer = (state = initialState, action) => {
     switch (action.type) {
         case ADD_POST:
             let newPost = {
-                message: state.newTextPost,
+                message: action.newPost,
                 id: state.posts.length + 1,
                 likesCount: 3,
                 dislikesCount: 3,
@@ -34,13 +32,6 @@ const profileReducer = (state = initialState, action) => {
                 posts: [...state.posts, newPost],
                 newTextPost: " "
             };
-
-        case   UPDATE_NEW_POST_TEXT: {
-            return {
-                ...state,
-                newTextPost: action.newText
-            };
-        }
 
         case SET_USER_PROFILE: {
             return {
@@ -60,16 +51,10 @@ const profileReducer = (state = initialState, action) => {
     }
 }
 
-export const addPostActionCreator = () => {
+export const addPostActionCreator = (newPost) => {
     return {
-        type: ADD_POST
-    };
-}
-
-export const updateNewPostTextActionCreator = (newText) => {
-    return {
-        type: UPDATE_NEW_POST_TEXT,
-        newText
+        type: ADD_POST,
+        newPost
     };
 }
 
@@ -100,6 +85,7 @@ export const setUserStatus = (userStatus)=>{
 
 export const getUserProfileStatusTC = (userId)=>{
   return (dispatch)=>{
+
         profileAPI.getUserStatus(userId)
             .then(data=>{
                 // debugger;
@@ -114,7 +100,7 @@ export const updateUserProfileStatusTC = (status)=>{
         profileAPI.updateUserStatus(status)
             .then(response=>{
                 // debugger;
-                if(response.data.resultCode == 0){
+                if(response.data.resultCode === 0){
                     let status = JSON.parse(response.config.data).status;
                     // debugger;
                     dispatch(setUserStatus(status))

@@ -2,6 +2,7 @@
     background-color: #9966CC;
     padding: 0 0px 5px 0px;
     color: burlywood;
+    height: auto;
 }
 .content img{
     width: 60%;
@@ -10,7 +11,7 @@
 }
 
 .content .profile{
-    padding: 2vmin;
+
 }
 
 .content .profile > div:first-child{

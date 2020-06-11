@@ -17,21 +17,17 @@ let dialogs = [
     {name: "Ilya", id: 7},
 ];
 
-const UPDATE_NEW_MESSAGE_TEXT = 'UPDATE-NEW-MESSAGE-TEXT';
 const SEND_MESSAGE = "ADD-MESSAGE";
 
 let initialState = {
     dialogs,
     messages,
-    newTextMessage: " "
-
 }
 const dialogsReducer = (state = initialState, action) => {
-    let stateCopy;
 
     switch (action.type) {
         case SEND_MESSAGE:
-            let body =  state.newTextMessage;
+            let body =  action.newMessage;
             state.messages.push({message: body, id: state.messages.length + 1});
 
              return{
@@ -40,27 +36,15 @@ const dialogsReducer = (state = initialState, action) => {
                 messages: [...state.messages]
             };
 
-        case UPDATE_NEW_MESSAGE_TEXT:
-            return {
-                ...state,
-                newTextMessage: action.newText
-            };
-
         default:
             return state;
     }
 }
 
-export const changeTextareaActionCreator = (message) => {
+export const addMessageActionCreator = (newMessage) => {
     return {
-        type: UPDATE_NEW_MESSAGE_TEXT,
-        newText: message,
-    }
-}
-
-export const addMessageActionCreator = () => {
-    return {
-        type: SEND_MESSAGE
+        type: SEND_MESSAGE,
+        newMessage
     }
 }
 

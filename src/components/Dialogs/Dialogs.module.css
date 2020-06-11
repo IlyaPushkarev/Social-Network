@@ -28,7 +28,9 @@
 }
 
 textarea{
-    min-height: 20vh;
+    width: 100%;
+    min-height: 10vh;
+    padding: 5px;
     border: 1px solid #330066;
     margin-bottom: 5vh;
     background-color: #ae74ea;

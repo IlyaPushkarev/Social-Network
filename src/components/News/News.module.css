@@ -1,6 +1,4 @@
 .news{
-    padding: 20px;
-    background-color: darkviolet;
     color: burlywood;
 }
 
@@ -76,7 +74,7 @@
     }
 
     .newItem__origin a{
-        padding: 0 0 0 2vmin;
+        padding: 1vmin;
     }
 }
 @media screen and (max-width: 620px) {
@@ -86,7 +84,6 @@
 
     .newItem__body{
         flex-direction: column;
-
         padding: 2vmin;
     }
     .newItem__photo img{

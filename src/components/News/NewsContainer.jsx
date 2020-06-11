@@ -1,9 +1,7 @@
 import React from "react";
 import News from "./News";
 import {connect} from "react-redux";
-import * as axios from "axios";
-import {getNewsThunkCreator, setArticlesAC} from "../../redux/news-reducer";
-import {newsAPI} from "../../api/newsAPI";
+import {getNewsThunkCreator} from "../../redux/news-reducer";
 
 class NewsContainer extends React.Component {
     componentDidMount() {

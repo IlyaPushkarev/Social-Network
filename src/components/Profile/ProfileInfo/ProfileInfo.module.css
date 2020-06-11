@@ -51,6 +51,7 @@
 .userInfo__item > span:first-child{
     font-weight: 700;
     text-transform: uppercase;
+    margin-right: 0.5rem;
 }
 
 .userInfo__userName{

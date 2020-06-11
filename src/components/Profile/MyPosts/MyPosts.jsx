@@ -1,18 +1,13 @@
 import React from "react";
 import classes from "./MyPosts.module.css";
 import Post from "./Post/Post";
-import Button from "../../common/Button/Button";
+import PostForm from "../../Forms/PostForm/PostForm";
 
 const MyPosts = (props)=>{
-    let newPostElement = React.createRef();
 
-    const onAddPost = ()=> {
-        props.addPost();
-    };
-
-    const onChangeTextarea = ()=>{
-        let text = newPostElement.current.value;
-        props.updateNewPostText(text);
+    const onAddPost = (formData)=> {
+        props.addPost(formData.newPost);
+        formData.newPost = "";
     };
 
     return (
@@ -24,10 +19,7 @@ const MyPosts = (props)=>{
                 </div>
 
                 <div className={classes.postNew__body}>
-                    <textarea ref={newPostElement} onChange={onChangeTextarea} value={props.newTextPost}></textarea>
-                    {/*<button className={classes.btn}  onClick={onAddPost}>Add post </button>*/}
-                    <Button onClick={onAddPost} text={"ADD POST"}/>
-
+                    <PostForm onSubmit={onAddPost}/>
                 </div>
             </div>
 
@@ -37,7 +29,12 @@ const MyPosts = (props)=>{
                 </div>
                 <div className={classes.posts}>
 
-                    { props.posts.map((post)=> <Post message={post.message} likeCount={post.likesCount} key={post.id}/>)}
+                    { props.posts.map((post)=> <Post photo={props.profile.photos.small}
+                                                     message={post.message}
+                                                     likeCount={post.likesCount}
+                                                     dislikeCount={post.dislikeCount}
+                                                     key={post.id}/>
+                                                     )}
                 </div>
             </div>
 

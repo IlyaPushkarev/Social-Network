@@ -8,23 +8,13 @@ import {
 } from "../../redux/users-reducer";
 import Users from "./Users";
 import {compose} from "redux";
-import {withAuth} from "../HOC/withAuth/withAuth";
+
 
 class UsersContainer extends React.Component {
-
-    componentDidMount() {
-
-        this.props.getUsers(this.props.currentPage, this.props.pageSize);
-    }
-
-    onPageChanged = (pageNum) => {
-
-        this.props.getUsers(pageNum, this.props.pageSize);
-    }
-
+    componentDidMount() {this.props.getUsers(this.props.currentPage, this.props.pageSize);}
+    onPageChanged = (pageNum) => {this.props.getUsers(pageNum, this.props.pageSize);}
     render() {
         return <>
-
             <Users totalUsersCount={this.props.totalUsersCount}
                    pageSize={this.props.pageSize}
                    currentPage={this.props.currentPage}

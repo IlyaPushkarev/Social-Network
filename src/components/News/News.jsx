@@ -64,7 +64,7 @@ const News = (props)=>{
                             </div>
                             <div className={classes.newItem__body}>
                                 <div className={classes.newItem__photo}>
-                                    <img src={n.urlToImage} alt="Photo for new"/>
+                                    <img src={n.urlToImage} alt={"News"}/>
                                 </div>
                                 <div className={classes.newItem__content}>
                                     <div className={classes.newItem__text}>
