@@ -1,5 +1,6 @@
 import {loginAPI} from "../api/loginAPI";
 import {stopSubmit} from "redux-form";
+// import {finilizeApp} from "./app-reducer";
 
 let SET_USER_DATA = "SET-USER-DATA";
 
@@ -41,7 +42,9 @@ export const getAuthUserData = ()=>{
     return (dispatch)=>{
         return loginAPI.getAuthUserData()
             .then(res=>{
-                // debugger
+                if(res.data.resultCode === 1){
+                    return new Error(res.data.messages[0])
+                }
                 let {id, email, login} = {...res.data.data};
                 dispatch(setAuthUserData(id, email, login, true));
             })
@@ -75,7 +78,8 @@ export const  logoutTC = ()=>{
                 // debugger
                 if(response.data.resultCode === 0){
                      // dispatch(setAuth(false, null));
-                     dispatch(setAuthUserData(null, null, null, false))
+                     dispatch(setAuthUserData(null, null, null, false));
+                     // dispatch(finilizeApp())
                 }
             })
             .catch(err=>console.error(err))

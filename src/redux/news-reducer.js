@@ -10,7 +10,7 @@ const newsReducer = (state = initialState, action)=>{
         case SET_ARTICLES:
             return {
                 ...state,
-                articles: [...state.articles, ...action.articles]
+                articles: [ ...action.articles]
             };
 
         default:

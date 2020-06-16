@@ -18,6 +18,7 @@ import {connect} from "react-redux";
 import {compose} from "redux";
 import {initializeApp} from "./redux/app-reducer";
 import Preloader from "./components/common/Preloader/Preloader";
+// import Preloader from "./components/common/Preloader/Preloader";
 
 
 class App extends React.Component {
@@ -27,7 +28,7 @@ class App extends React.Component {
 
     render() {
         if(!this.props.initialized){
-            return <Preloader />
+            return <Preloader/>
         }
 
         return (

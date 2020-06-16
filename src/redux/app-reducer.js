@@ -1,6 +1,7 @@
 import {getAuthUserData} from "./auth-reducer";
 
-const INITIALIZED_SUCCESS = "INITIALIZED_SUCCESS";
+const INITIALIZED_SUCCESS = "INITIALIZED_SUCCESS",
+    FINALIZED_SUCCESS = "FINALIZED_SUCCESS";
 
 let initialState = {
     initialized: false
@@ -12,6 +13,12 @@ const appReducer = (state = initialState, action)=>{
             return{
                 ...state,
                 initialized: true
+            }
+
+        case FINALIZED_SUCCESS:
+            return {
+                ...state,
+                initialized: false
             }
         default:
             return state;
@@ -34,4 +41,9 @@ export const initializeApp = ()=>{
     }
 }
 
+/*export const finilizeApp = ()=>{
+    return{
+        type:FINALIZED_SUCCESS
+    }
+}*/
 export default appReducer;
