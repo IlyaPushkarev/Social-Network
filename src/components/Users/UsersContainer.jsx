@@ -26,6 +26,8 @@ class UsersContainer extends React.Component {
         this.props.getUsers(pageNum, this.props.pageSize);
     }
     render() {
+
+        // console.log("render users")
         return <>
             <Users totalUsersCount={this.props.totalUsersCount}
                    pageSize={this.props.pageSize}
@@ -42,6 +44,7 @@ class UsersContainer extends React.Component {
 }
 
 let mapStateToProps = (state) => {
+    // console.log("mapStateToPros users")
     return {
         users: requestUsers(state),
         pageSize: getPageSize(state),

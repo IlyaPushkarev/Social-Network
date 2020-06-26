@@ -21,16 +21,17 @@ const newsReducer = (state = initialState, action)=>{
 export const setArticlesAC = (articles)=>{
     return {
         type: SET_ARTICLES,
-        articles,
+        articles: articles
+
     }
 }
 
 export const getNewsThunkCreator = ()=>{
-    return (dispatch)=>{
-        newsAPI.getNewsData()
-            .then(res=>{
-
-                dispatch(setArticlesAC(res.data.articles));
+    return  (dispatch)=>{
+        return newsAPI.getNewsData()
+            .then(response=>{
+                // console.log(response.data)
+                dispatch(setArticlesAC(response.data.articles));
 
             })
     }

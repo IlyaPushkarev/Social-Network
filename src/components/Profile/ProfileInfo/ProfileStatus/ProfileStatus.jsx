@@ -12,7 +12,6 @@ class ProfileStatus extends React.Component {
     activateEditMove = ()=>{
 
         this.setState({
-
             editMode: true
         })
     }
@@ -28,7 +27,6 @@ class ProfileStatus extends React.Component {
     onStatusChange = (e)=>{
         this.setState({
             status: e.target.value
-
         })
     }
 

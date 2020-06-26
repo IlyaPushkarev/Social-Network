@@ -8,17 +8,20 @@ const SET_TOTAL_USERS_COUNT = "SET-TOTAL-USERS-COUNT";
 const TOGGLE_IS_FETCHING = "TOGGLE_IS_FETCHING";
 const TOGGLE_IS_FOLLOWING_PROGRESS = "TOGGLE_IS_FOLLOWING_PROGRESS";
 
+
+
 let initialState = {
     users: [],
     pageSize: 6,
     totalUsersCount: 0,
     currentPage: 1,
     isFetching: true,
-    followingInProgress: []
+    followingInProgress: [],
 }
 
 const usersReducer = (state = initialState, action) => {
     switch (action.type) {
+
         case FOLLOW:
             return {
                 ...state,
@@ -125,9 +128,9 @@ export const getUsersThunkCreator = (page, pageSize)=>{
     return (dispatch)=>{
         dispatch(toggleIsFetchingAC(true));
 
-        usersAPI.getUsers(page, pageSize)
+        return usersAPI.getUsers(page, pageSize)
             .then(data => {
-                // debugger
+                debugger
                 dispatch(setCurrentPageAC(page));
                 dispatch(toggleIsFetchingAC(false));
                 dispatch(setUsersAC(data.items));

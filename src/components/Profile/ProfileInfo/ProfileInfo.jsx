@@ -1,6 +1,7 @@
 import React from "react";
 import classes from "./ProfileInfo.module.css";
-import ProfileStatus from "./ProfileStatus/ProfileStatus"
+// import ProfileStatus from "./ProfileStatus/ProfileStatus"
+import ProfileStatusWithHooks from "./ProfileStatus/ProfileStatusWithHooks";
 
 const ProfileInfo = (props) => {
     if (!props.profile) {
@@ -35,7 +36,7 @@ const ProfileInfo = (props) => {
                     </div>
                     <div className={classes.userInfo}>
                         <div className={classes.userInfo__userName}>
-                            <div className={classes.userInfo__item}><span>Status: </span> <ProfileStatus status={props.status} updateUserStatus={props.updateUserStatus}/> </div>
+                            <div className={classes.userInfo__item}><span>Status: </span> <ProfileStatusWithHooks status={props.status} updateUserStatus={props.updateUserStatus}/> </div>
                         </div>
                         <div className={classes.userInfo__userName}>
                             <div className={classes.userInfo__item}><span>Username: </span>{props.profile.fullName}</div>

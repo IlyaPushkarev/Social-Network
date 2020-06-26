@@ -30,6 +30,7 @@ class ProfileContainer extends React.Component {
     }
 
     render() {
+        // console.log("RENDER profile")
         return (
             <Profile {...this.props} profile={this.props.profile}/>
             // <ProfileWithAuth {...this.props} profile={this.props.profile}/>
@@ -38,6 +39,7 @@ class ProfileContainer extends React.Component {
 }
 
 let mapStateToProps = (state) => {
+    // console.log("mapStateToPros profile")
     return {
         profile: state.profilePage.profile,
         status: state.profilePage.status,
