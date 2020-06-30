@@ -1,7 +1,9 @@
 import {followSuccess, getUsersThunkCreator, setUsersAC} from "./users-reducer";
-import moxios from "moxios";
-import configureMockStore from "redux-mock-store"
-import thunkMiddleware from "redux-thunk";
+import MockAdapter from "axios-mock-adapter";
+import API from "../api/api";
+import thunk from "redux-thunk";
+import configureMockStore from "redux-mock-store";
+
 
 const FOLLOW = "FOLLOW";
 const UNFOLLOW = "UNFOLLOW";
@@ -11,17 +13,6 @@ const SET_TOTAL_USERS_COUNT = "SET-TOTAL-USERS-COUNT";
 const TOGGLE_IS_FETCHING = "TOGGLE_IS_FETCHING";
 const TOGGLE_IS_FOLLOWING_PROGRESS = "TOGGLE_IS_FOLLOWING_PROGRESS";
 
-
-const middlewares = [thunkMiddleware];
-const mockStore = configureMockStore(middlewares);
-const initialState = {
-    users: [],
-    pageSize: 6,
-    totalUsersCount: 0,
-    currentPage: 1,
-    isFetching: true,
-    followingInProgress: [],
-};
 it('should create action successful user subscription', function () {
     const userId = 12;
     const expectedAction = {
@@ -39,58 +30,53 @@ it('should create action to set users', function () {
     }
     expect(setUsersAC(users)).toEqual(expectedAction)
 });
+
+const mock = new MockAdapter(API);
+const getUserMock = (userId)=>mock.onGet(/users?page=\d&count=\d/).reply(200,{userInfo:"value"})
+
+const middlewares = [thunk];
+const mockStore = configureMockStore(middlewares);
+const initialState = {
+    users: [],
+    pageSize: 6,
+    totalUsersCount: 0,
+    currentPage: 1,
+    isFetching: true,
+    followingInProgress: [],
+};
+const mockData = {userInfo:"value"},
+    currentPage = 1,
+    totalUsersCount = 100;
+
 describe("users thunk",()=>{
     let store;
     beforeEach(()=>{
-        moxios.install();
         store = mockStore(initialState);
     });
-    afterEach(()=>{
-        moxios.uninstall()
-    });
-    it('get users when fetching has been done', function (done) {
+    it('get users when fetching has been done', async function (done) {
+         const expectedActions = [
+             {
+                 type: TOGGLE_IS_FETCHING,
+                 isFetching: false
+             },
+             {
+                 type: SET_CURRENT_PAGE,
+                 currentPage: currentPage
+             },
+             {
+                 type: SET_USERS,
+                 users: mockData
+             },
+             {
+                 type: SET_TOTAL_USERS_COUNT,
+                 count: totalUsersCount
+             }
+         ]
 
-        const currentPage = 1,
-            totalUsersCount = 100,
-            page = 1,
-            pageSize = 6;
+        getUserMock();
 
-        let usersList = []
-
-
-        moxios.wait(function () {
-            let request = moxios.requests.mostRecent();
-            request.respondWith({
-                status:200,
-                response:{
-                    items:[]
-                }
-            })
-        })
-
-        const expectedActions = [
-            {
-                type: TOGGLE_IS_FETCHING,
-                isFetching: false
-            },
-            {
-                type: SET_CURRENT_PAGE,
-                currentPage: currentPage
-            },
-            {
-                type: SET_USERS,
-                users: usersList
-            },
-            {
-                type: SET_TOTAL_USERS_COUNT,
-                count: totalUsersCount
-            }
-        ]
-
-        return store.dispatch(getUsersThunkCreator(page,pageSize)).then(()=>{
-            const actualActions = store.getActions();
-
-            expect(actualActions).toEqual(expectedActions)
+        return store.dispatch(getUsersThunkCreator(1,5)).then(()=>{
+            expect(store.getActions()).toEqual(expectedActions);
             done();
         })
     });

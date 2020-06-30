@@ -129,12 +129,17 @@ export const getUsersThunkCreator = (page, pageSize)=>{
         dispatch(toggleIsFetchingAC(true));
 
         return usersAPI.getUsers(page, pageSize)
-            .then(data => {
+            .then(response =>{
                 debugger
+                return response.data
+            })
+            .then(data => {
+                // debugger
                 dispatch(setCurrentPageAC(page));
                 dispatch(toggleIsFetchingAC(false));
                 dispatch(setUsersAC(data.items));
                 dispatch(setTotalUsersCountAC(data.totalCount));
+                // return data
             });
     }
 }

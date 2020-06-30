@@ -3,7 +3,7 @@ import API from "./api";
 export const usersAPI = {
     getUsers: (currentPage, pageSize) => {
         return API.get(`users?page=${currentPage}&count=${pageSize}`)
-            .then(response => response.data)
+            // .then(response => response.data)
     },
 
     follow: (userId) => {
