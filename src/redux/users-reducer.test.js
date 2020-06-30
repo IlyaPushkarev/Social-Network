@@ -32,7 +32,17 @@ it('should create action to set users', function () {
 });
 
 const mock = new MockAdapter(API);
-const getUserMock = (userId)=>mock.onGet(/users?page=\d&count=\d/).reply(200,{userInfo:"value"})
+const getUserMock = (userId) => mock.onGet(/users\?page=\d&count=\d/).reply(200, {items: [
+        {
+            followed: true,
+            id: 9022,
+            name: "andrey5",
+            status: null,
+            uniqueUrlName: null
+        }
+    ],
+    totalCount: 100
+})
 
 const middlewares = [thunk];
 const mockStore = configureMockStore(middlewares);
@@ -44,38 +54,50 @@ const initialState = {
     isFetching: true,
     followingInProgress: [],
 };
-const mockData = {userInfo:"value"},
+const usersList = [
+        {
+            followed: true,
+            id: 9022,
+            name: "andrey5",
+            status: null,
+            uniqueUrlName: null
+        }
+    ],
     currentPage = 1,
     totalUsersCount = 100;
 
-describe("users thunk",()=>{
+describe("users thunk", () => {
     let store;
-    beforeEach(()=>{
+    beforeEach(() => {
         store = mockStore(initialState);
     });
     it('get users when fetching has been done', async function (done) {
-         const expectedActions = [
-             {
-                 type: TOGGLE_IS_FETCHING,
-                 isFetching: false
-             },
-             {
-                 type: SET_CURRENT_PAGE,
-                 currentPage: currentPage
-             },
-             {
-                 type: SET_USERS,
-                 users: mockData
-             },
-             {
-                 type: SET_TOTAL_USERS_COUNT,
-                 count: totalUsersCount
-             }
-         ]
+        const expectedActions = [
+            {
+                isFetching: true,
+                type: TOGGLE_IS_FETCHING
+            },
+            {
+                type: SET_CURRENT_PAGE,
+                currentPage: currentPage
+            },
+            {
+                type: TOGGLE_IS_FETCHING,
+                isFetching: false
+            },
+            {
+                type: SET_USERS,
+                users: usersList
+            },
+            {
+                type: SET_TOTAL_USERS_COUNT,
+                count: totalUsersCount
+            }
+        ]
 
         getUserMock();
 
-        return store.dispatch(getUsersThunkCreator(1,5)).then(()=>{
+        return store.dispatch(getUsersThunkCreator(1, 5)).then(() => {
             expect(store.getActions()).toEqual(expectedActions);
             done();
         })
