@@ -130,7 +130,7 @@ export const getUsersThunkCreator = (page, pageSize)=>{
 
         return usersAPI.getUsers(page, pageSize)
             .then(response =>{
-                debugger
+                // debugger
                 return response.data
             })
             .then(data => {

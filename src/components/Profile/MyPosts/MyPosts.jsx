@@ -11,7 +11,7 @@ export default React.memo(function MyPosts(props) {
         };
 
         return (
-            <div className={classes.posts}>
+            <div className={classes.wrapper}>
 
                 <div className={classes.postNew}>
                     <div className={classes.header}>
@@ -29,7 +29,8 @@ export default React.memo(function MyPosts(props) {
                     </div>
                     <div className={classes.posts}>
 
-                        {props.posts.map((post) => <Post photo={props.profile.photos.small}
+                        {
+                            props.posts.map((post) => <Post photo={props.profile.photos.small}
                                                               message={post.message}
                                                               likeCount={post.likesCount}
                                                               dislikeCount={post.dislikeCount}

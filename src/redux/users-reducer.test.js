@@ -4,14 +4,13 @@ import API from "../api/api";
 import thunk from "redux-thunk";
 import configureMockStore from "redux-mock-store";
 
-
-const FOLLOW = "FOLLOW";
-const UNFOLLOW = "UNFOLLOW";
+// const FOLLOW = "FOLLOW";
+// const UNFOLLOW = "UNFOLLOW";
 const SET_USERS = "SET-USERS";
 const SET_CURRENT_PAGE = "SET-CURRENT-PAGE";
 const SET_TOTAL_USERS_COUNT = "SET-TOTAL-USERS-COUNT";
 const TOGGLE_IS_FETCHING = "TOGGLE_IS_FETCHING";
-const TOGGLE_IS_FOLLOWING_PROGRESS = "TOGGLE_IS_FOLLOWING_PROGRESS";
+// const TOGGLE_IS_FOLLOWING_PROGRESS = "TOGGLE_IS_FOLLOWING_PROGRESS";
 
 it('should create action successful user subscription', function () {
     const userId = 12;
@@ -32,10 +31,10 @@ it('should create action to set users', function () {
 });
 
 const mock = new MockAdapter(API);
-const getUserMock = (userId) => mock.onGet(/users\?page=\d&count=\d/).reply(200, {items: [
+const getUserMock = () => mock.onGet(/users\?page=\d&count=\d/).reply(200, {items: [
         {
             followed: true,
-            id: 9022,
+            id: 9022, //was 9902
             name: "andrey5",
             status: null,
             uniqueUrlName: null

@@ -2,7 +2,7 @@ import {loginAPI} from "../api/loginAPI";
 import {stopSubmit} from "redux-form";
 // import {finilizeApp} from "./app-reducer";
 
-let SET_USER_DATA = "SET-USER-DATA";
+let SET_USER_DATA = "auth/SET-USER-DATA";
 
 let initialState = {
     id: null,

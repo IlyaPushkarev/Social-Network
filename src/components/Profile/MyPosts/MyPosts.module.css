@@ -1,4 +1,4 @@
-.posts{
+.wrapper{
     width: 100%;
 }
 .postsBlock{
@@ -28,7 +28,7 @@
 .postNew__body textarea{
     min-height: 20vh;
     /*border: 1px solid #330066;*/
-    margin-bottom: 5vh;
+    /*margin-bottom: 5vh;*/
     background-color: #ae74ea;
     color: burlywood;
     font-size: 1.5rem;
