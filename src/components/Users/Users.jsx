@@ -4,19 +4,15 @@ import userPhoto from "../../assets/images/userMalePhoto.jpg"
 import {NavLink} from "react-router-dom";
 import Button from "../common/Button/Button";
 import Preloader from "../common/Preloader/Preloader";
+import PaginatorCreate from "../common/Pagination/Pagination";
 
 
 let Users = (props) => {
 
-    let pagesCount = Math.ceil(props.totalUsersCount / props.pageSize);
-    let pages = [];
-    for (let i = 1; i <= pagesCount; i++) {
-        pages.push(i);
-    }
-
     if (props.isFetching) {
         return (<Preloader/>)
     }
+
     return (
         <div className={classes.users}>
             <div className={classes.usersContainer}>
@@ -27,7 +23,7 @@ let Users = (props) => {
                                     <div className={classes.userBox__photo}>
                                         <NavLink to={'/profile/' + u.id}>
                                             <img src={u.photos.small != null ? u.photos.small : userPhoto}
-                                                  alt={"User"}/>
+                                                 alt={"User"}/>
                                         </NavLink>
                                     </div>
 
@@ -35,15 +31,14 @@ let Users = (props) => {
                                         {
                                             u.followed
                                                 ? <Button disabled={props.followingInProgress.some(id => id === u.id)}
-                                                          onClick={() =>  props.unfollow(u.id) /*thunk-функция*/}
-                                                          text={"Unfollow"}/>
+                                                          onClick={() => props.unfollow(u.id)} /*thunk-функция*!*/
+                                                          text={"Unfollow"}
+                                                />
 
                                                 : <Button disabled={props.followingInProgress.some(id => id === u.id)}
-                                                          onClick={() => props.follow(u.id) /*thunk-функция*/}
+                                                          onClick={() => props.follow(u.id)} /*thunk-функция*!*/
                                                           text={"Follow"}/>
                                         }
-
-
                                     </div>
                                 </div>
                                 <div className={classes.userBox__description}>
@@ -61,21 +56,19 @@ let Users = (props) => {
                     )
                 }
             </div>
-            {<div className={classes.numeration}>
-                {pages.map(p => {
-                    return <span className={props.currentPage === p ? classes.selectedPage : ""}
-                                 onClick={(e) => {
-                                     props.onPageChanged(p)
-                                 }}
-                                 key={p}>
-                        {p}
-                    </span>
-                })
-                }
-            </div>}
+
+            <PaginatorCreate limitionAmountPages={20}
+                             totalCountItems={props.totalUsersCount}
+                             pageSize={props.pageSize}
+                             onChangePage={props.onPageChanged}
+                             currentPage={props.currentPage}
+            />
+
+
         </div>
 
     )
+
 }
 
 export default Users;

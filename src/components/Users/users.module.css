@@ -54,26 +54,6 @@
     text-transform: uppercase;
 }
 
-.numeration{
-    color: white;
-    margin: 0 auto;
-    text-align: center;
-}
-.numeration span{
-    font-size: 1.5rem;
-    padding-left: 1vmin;
-    text-align: center;
-    border-bottom: 3px solid transparent;
-}
-
-.numeration span:hover{
-    border-bottom: 3px solid burlywood;
-    cursor: pointer;
-}
-.selectedPage{
-    color: burlywood;
-    font-weight: bold;
-}
 @media screen and (max-width: 1200px) {
     .userBox__description{
         flex-grow: 1;

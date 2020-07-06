@@ -15,6 +15,7 @@
 .app-wrapper-content{
   grid-area: c;
   padding: 1rem;
+  overflow: hidden;
 }
 
 

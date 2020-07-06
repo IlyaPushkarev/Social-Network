@@ -24,6 +24,7 @@ class UsersContainer extends React.Component {
     }
     onPageChanged = (pageNum) => {
         this.props.getUsers(pageNum, this.props.pageSize);
+        // this.props.setCurrentPage(pageNum)
     }
     render() {
 
@@ -96,7 +97,8 @@ export default compose(
         unfollow: unfollowThunkCreator,
         setCurrentPage: setCurrentPageAC,
         toggleFollowingProgress,
-        getUsers: getUsersThunkCreator/*используеться результат вызова getUsersThunkCreator*/
+        getUsers: getUsersThunkCreator/*используеться результат вызова getUsersThunkCreator*/,
+
 
     })
 )(UsersContainer)

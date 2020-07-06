@@ -1,0 +1,25 @@
+.pagination{
+    display: flex;
+    align-items: center;
+}
+.numeration{
+    flex: 10 1 auto;
+    color: white;
+    margin: 0 auto;
+    text-align: center;
+}
+.numeration span{
+    font-size: 1.5rem;
+    padding-left: 1vmin;
+    text-align: center;
+    border-bottom: 3px solid transparent;
+}
+
+.numeration span:hover{
+    border-bottom: 3px solid burlywood;
+    cursor: pointer;
+}
+.selectedPage{
+    color: burlywood;
+    font-weight: bold;
+}
