@@ -4,7 +4,7 @@ import Post from "./Post/Post";
 import PostForm from "../../Forms/PostForm/PostForm";
 
 export default React.memo(function MyPosts(props) {
-
+        
         const onAddPost = (formData) => {
             props.addPost(formData.newPost);
             formData.newPost = "";

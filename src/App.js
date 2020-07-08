@@ -6,10 +6,8 @@ import './App.css';
 import Navbar from "./components/Navbar/Navbar";
 import Music from "./components/Music/Music";
 import Settings from "./components/Settings/Settings";
-
-import DialogsContainer from "./components/Dialogs/DialogsContainer";
 import UsersContainer from "./components/Users/UsersContainer";
-import ProfileContainer from "./components/Profile/ProfileContainer";
+
 import NewsContainer from "./components/News/NewsContainer";
 import HeaderContainer from "./components/Header/HeaderContainer";
 import LoginContainer from "./components/Login/LoginContainer";
@@ -18,8 +16,14 @@ import {connect} from "react-redux";
 import {compose} from "redux";
 import {initializeApp} from "./redux/app-reducer";
 import Preloader from "./components/common/Preloader/Preloader";
-// import Preloader from "./components/common/Preloader/Preloader";
+import withSuspense from "./components/HOC/withSuspense/withSuspense";
 
+
+// import ProfileContainer from "./components/Profile/ProfileContainer";
+const ProfileContainer = React.lazy(()=>import("./components/Profile/ProfileContainer"))
+
+// import DialogsContainer from "./components/Dialogs/DialogsContainer";
+const DialogsContainer = React.lazy(()=> import("./components/Dialogs/DialogsContainer"));
 
 class App extends React.Component {
     componentDidMount() {
@@ -32,7 +36,7 @@ class App extends React.Component {
         }
 
         return (
-            <BrowserRouter>
+            <BrowserRouter basename={process.env.PUBLIC_URL}>
                 <div className="app-wrapper">
                     <HeaderContainer/>
                     <Navbar/>
@@ -40,9 +44,9 @@ class App extends React.Component {
 
                         <Route path="/login" render={() => <LoginContainer/>}/>
 
-                        <Route path="/dialogs" render={() => <DialogsContainer/>}/>
+                        <Route path="/dialogs" render={withSuspense(DialogsContainer) }/>
 
-                        <Route path="/profile/:userId?" render={() => <ProfileContainer/>}/>
+                        <Route path="/profile/:userId?" render={withSuspense(ProfileContainer)}/>
 
                         <Route path="/users" render={() => <UsersContainer/>}/>
 

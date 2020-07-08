@@ -3,7 +3,7 @@ import Profile from "./Profile";
 import {connect} from "react-redux";
 import {
     getUserProfileStatusTC,
-    getUserProfileThunkCreator,
+    getUserProfileThunkCreator, setMainPhotoProfile, updateProfileInfo,
     updateUserProfileStatusTC
 } from "../../redux/profile-reducer";
 import {withRouter} from "react-router-dom";
@@ -12,27 +12,39 @@ import {compose} from "redux";
 import {withAuth} from "../HOC/withAuth/withAuth";
 
 
-
 class ProfileContainer extends React.Component {
-    componentDidMount() {
-
-        // let isAuth = this.props.auth.isAuth;
+    refreshProfile() {
         let userId = this.props.match.params.userId;
-        if(!userId){
+        if (!userId) {
             userId = this.props.authorizedUserId;
-            if(!userId){
+            if (!userId) {
                 this.props.history.push("/login");
             }
         }
         this.props.getUserProfile(userId);
         this.props.getUserStatus(userId);
+    }
 
+    componentDidMount() {
+
+        // let isAuth = this.props.auth.isAuth;
+        this.refreshProfile()
+
+    }
+
+    componentDidUpdate(prevProps, prevState, snapshot) {
+        if (prevProps.match.params.userId !== this.props.match.params.userId) {
+            this.refreshProfile()
+        }
     }
 
     render() {
         // console.log("RENDER profile")
         return (
-            <Profile {...this.props} profile={this.props.profile}/>
+            <Profile profile={this.props.profile}
+                     isOwner={!this.props.match.params.userId}
+                     {...this.props}
+            />
             // <ProfileWithAuth {...this.props} profile={this.props.profile}/>
         )
     }
@@ -52,9 +64,11 @@ export default compose(
         getUserProfile: getUserProfileThunkCreator,
         getUserStatus: getUserProfileStatusTC,
         updateUserStatus: updateUserProfileStatusTC,
+        savePhoto: setMainPhotoProfile,
+        updateProfileInfo: updateProfileInfo
     }),
     withRouter,
-     withAuth
+    withAuth
 )(ProfileContainer)
 
 /*

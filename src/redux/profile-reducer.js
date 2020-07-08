@@ -10,6 +10,7 @@ const ADD_POST = 'ADD-POST';
 const SET_USER_PROFILE = "SET-USER-PROFILE";
 const SET_USER_STATUS = "SET-USER-STATUS";
 const  DELETE_POST = "DELETE_POST";
+const SAVE_USER_PHOTO_SUCCESS = "SAVE_USER_PHOTO_SUCCESS"
 
 let initialState = {
     posts,
@@ -52,6 +53,16 @@ const profileReducer = (state = initialState, action) => {
                 status: action.userStatus
             }
         }
+
+        case SAVE_USER_PHOTO_SUCCESS:{
+            return {
+                ...state,
+                profile: {
+                    ...state.profile,
+                    photos: action.photos
+                }
+            }
+        }
         default:
             return state;
     }
@@ -74,6 +85,13 @@ export const setUserProfile = (profile)=>{
     return {
         type: SET_USER_PROFILE,
         profile,
+    }
+}
+
+export const updateUserPhoto = (photos)=>{
+    return {
+        type: SAVE_USER_PHOTO_SUCCESS,
+        photos,
     }
 }
 
@@ -108,7 +126,7 @@ export const getUserProfileStatusTC = (userId)=>{
 }
 
 export const updateUserProfileStatusTC = (status)=>{
-  return (dispatch)=>{
+  return  (dispatch)=>{
         profileAPI.updateUserStatus(status)
             .then(response=>{
                 // debugger;
@@ -122,4 +140,29 @@ export const updateUserProfileStatusTC = (status)=>{
   }
 }
 
+export const setMainPhotoProfile = (photoSrc)=>{
+    return async (dispatch)=>{
+        const response = await profileAPI.setUserPhoto(photoSrc)
+
+        if(response.data.resultCode === 0){
+            dispatch(updateUserPhoto(response.data.data.photos))
+        }
+
+        if(response.data.resultCode === 1){
+            alert("Не удалось загрузить фото")
+        }
+    }
+}
+
+export const updateProfileInfo = (profileInfo,userId)=>{
+    return async (dispatch)=>{
+        const response = await profileAPI.setProfileInfo(profileInfo)
+        // debugger
+        if(response.data.resultCode === 0){
+            dispatch(getUserProfileThunkCreator(userId))
+        }else{
+            alert("Не удалось обновить анкетные данные")
+        }
+    }
+}
 export default profileReducer;
