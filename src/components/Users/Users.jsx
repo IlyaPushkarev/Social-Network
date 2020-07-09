@@ -8,7 +8,7 @@ import PaginatorCreate from "../common/Pagination/Pagination";
 
 
 let Users = (props) => {
-
+    // debugger
     if (props.isFetching) {
         return (<Preloader/>)
     }
@@ -26,7 +26,7 @@ let Users = (props) => {
                                                  alt={"User"}/>
                                         </NavLink>
                                     </div>
-
+                                    {props.isAuth &&
                                     <div className={classes.userBox__btn}>
                                         {
                                             u.followed
@@ -40,6 +40,7 @@ let Users = (props) => {
                                                           text={"Follow"}/>
                                         }
                                     </div>
+                                    }
                                 </div>
                                 <div className={classes.userBox__description}>
 

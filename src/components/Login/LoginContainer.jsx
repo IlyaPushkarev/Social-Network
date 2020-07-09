@@ -10,13 +10,15 @@ class LoginContainer extends React.Component {
 
     }
     onSubmit = (formData) => {
-        let {login, password, rememberMe} = formData;
-        this.props.login(login, password, rememberMe);
+        let {login, password, rememberMe, captchaText} = formData;
+        this.props.login(login, password, rememberMe, captchaText);
+        // debugger
     }
+
     render() {return (
             this.props.isAuth
                 ? <Redirect to={`/profile/${this.props.id}`}/>
-                : <Login onSubmit={this.onSubmit}/>
+                : <Login onSubmit={this.onSubmit} captchaUrl={this.props.captchaUrl}/>
         )
     }
 }
@@ -25,7 +27,8 @@ let mapStateToProps = (state) => {
     return {
         isAuth: state.auth.isAuth,
         login: state.auth.login,
-        id: state.auth.id
+        id: state.auth.id,
+        captchaUrl: state.auth.captchaUrl
     }
 }
 
@@ -34,8 +37,8 @@ let mapDispatchToProps = (dispatch) => {
         setAuthUserData: (userId, email, login) => {
             dispatch(setAuthUserData(userId, email, login));
         },
-        login: (login, password, rememberMe) => {
-            dispatch(loginTC(login, password, rememberMe));
+        login: (login, password, rememberMe,captchaText) => {
+            dispatch(loginTC(login, password, rememberMe,captchaText));
         }
     }
 }

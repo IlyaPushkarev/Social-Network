@@ -6,7 +6,10 @@ import Button from "../../common/Button/Button";
 import {Input} from "../../common/FormsControls/FormsControls";
 import {requiredField} from "../../../utils/validators/validators";
 
+const required = value => value ? undefined : 'Required'
+
 let LoginForm = (props)=>{
+    // debugger
     return (
         <form onSubmit={props.handleSubmit}>
             <div >
@@ -36,6 +39,11 @@ let LoginForm = (props)=>{
                     <p>{props.error}</p>
                 </div>
             }
+            {props.captchaUrl
+            && <div>
+                <img src={props.captchaUrl} alt="captcha"/>
+                <Field name={"captchaText"} type={"text"} component={"input"} validate={required}/>
+            </div>}
             <div>
                 <Button text={"Login"} onClick={props.handleSubmit}></Button>
                 {/*<button>Login</button>*/}

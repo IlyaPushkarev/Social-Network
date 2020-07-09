@@ -6,16 +6,25 @@ let posts = [
     {message: "Development", id: 3, likesCount: 11, dislikeCount: 5},
 ];
 
-const ADD_POST = 'ADD-POST';
-const SET_USER_PROFILE = "SET-USER-PROFILE";
-const SET_USER_STATUS = "SET-USER-STATUS";
-const  DELETE_POST = "DELETE_POST";
+const ADD_POST = 'ADD_POST';
+
+const SET_USER_PROFILE = "SET_USER_PROFILE";
+const GET_USER_PROFILE_SUCCESS = "GET_USER_PROFILE_SUCCESS";
+const GET_USER_PROFILE_FAILURE = "GET_USER_PROFILE_FAILURE";
+
+const SET_USER_STATUS = "SET_USER_STATUS";
+const GET_USER_STATUS_SUCCESS = "GET_USER_STATUS_SUCCESS";
+const GET_USER_STATUS_FAILURE = "GET_USER_STATUS_FAILURE";
+
+const DELETE_POST = "DELETE_POST";
 const SAVE_USER_PHOTO_SUCCESS = "SAVE_USER_PHOTO_SUCCESS"
 
 let initialState = {
     posts,
     profile: null,
-    status: "Status is loading"
+    isLoadedProfile: true,
+    status: "Status is loading",
+    isLoadedStatus:true
 }
 
 const profileReducer = (state = initialState, action) => {
@@ -39,17 +48,29 @@ const profileReducer = (state = initialState, action) => {
                 ...state,
                 posts: state.posts.filter(post=>post.id !== action.postId)
             }
-
+        case GET_USER_PROFILE_FAILURE:{
+            return {
+                ...state,
+                isLoadedProfile: false
+            }
+        }
         case SET_USER_PROFILE: {
             return {
                 ...state,
+                isLoadedProfile: true,
                 profile: action.profile
             }
         }
-
+        case GET_USER_STATUS_FAILURE:{
+            return {
+                ...state,
+                isLoadedStatus: false
+            }
+        }
         case SET_USER_STATUS: {
             return {
                 ...state,
+                isLoadedStatus:true,
                 status: action.userStatus
             }
         }
@@ -81,10 +102,23 @@ export  const  deletePostAC = (postId)=>{
         postId
     }
 }
+
 export const setUserProfile = (profile)=>{
     return {
         type: SET_USER_PROFILE,
         profile,
+    }
+}
+export const getUserProfileSuccess = ()=>{
+    return {
+        type: GET_USER_PROFILE_SUCCESS,
+        // isLoadedProfile: true
+    }
+}
+export const getUserProfileFailure = ()=>{
+    return {
+        type: GET_USER_PROFILE_FAILURE,
+        // isLoadedProfile: false
     }
 }
 
@@ -101,7 +135,12 @@ export const getUserProfileThunkCreator = (userId)=>{
             .then(response=>response.data)
             .then(data=>{
                 // debugger
+                dispatch(getUserProfileSuccess())
                 dispatch(setUserProfile(data));
+            })
+            .catch(error=> {
+                dispatch(getUserProfileFailure())
+                // console.log(error)
             })
     }
 }
@@ -113,14 +152,32 @@ export const setUserStatus = (userStatus)=>{
     }
 }
 
+export const getUserStatusSuccess = ()=>{
+    return {
+        type:GET_USER_STATUS_SUCCESS,
+        isLoadedStatus: true
+    }
+}
+
+export const getUserStatusFailure = ()=>{
+    return {
+        type:GET_USER_PROFILE_FAILURE,
+        sLoadedStatus: false
+    }
+}
+
 export const getUserProfileStatusTC = (userId)=>{
   return (dispatch)=>{
-
         profileAPI.getUserStatus(userId)
             .then(data=>{
                 // debugger;
                 let status = data.data;
+                dispatch(getUserStatusSuccess())
                 dispatch(setUserStatus(status))
+            })
+            .catch(err=>{
+                dispatch(getUserStatusFailure())
+                alert(err);
             })
   }
 }
@@ -134,8 +191,13 @@ export const updateUserProfileStatusTC = (status)=>{
                     let status = JSON.parse(response.config.data).status;
                     // debugger;
                     dispatch(setUserStatus(status))
+                }else{
+                    console.log(response);
                 }
-
+            })
+            .catch(err=>{
+                alert("Status wasn't update")
+                console.log(err);
             })
   }
 }

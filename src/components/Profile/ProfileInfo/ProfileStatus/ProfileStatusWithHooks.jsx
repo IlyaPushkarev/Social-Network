@@ -9,12 +9,16 @@ const ProfileStatusWithHooks  = (props)=> {
     useEffect(()=>{
        setStatus( props.status)
     },[props.status])
+
     const activeEditMode = ()=>{
         setEditMode(true);
     }
+
     const deactivateEditMode = ()=>{
         setEditMode(false);
-        props.updateUserStatus(status);
+        if(status !== props.status){
+            props.updateUserStatus(status);
+        }
     }
 
     const  onStatusChange = (e)=>{
@@ -29,11 +33,12 @@ const ProfileStatusWithHooks  = (props)=> {
                                value={status}
                                onBlur={()=>deactivateEditMode()}
                                onChange={onStatusChange}
+                               maxLength="300"
                         />
                         <Button text={"ADD status"}/>
                     </div>
                     : <div className={[classes["statusPanel__display"],classes["unselectable"]].join(" ")}>
-                        <span onClick={()=>activeEditMode()}>{props.status}</span>
+                        <span onClick={()=>activeEditMode()}>{props.status ? props.status : "Write status"}</span>
                     </div>
                 }
 

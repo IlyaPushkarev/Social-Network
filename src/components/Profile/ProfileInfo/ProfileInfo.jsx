@@ -54,7 +54,7 @@ const ProfileData = (props) => {
                     <div className={classes.userInfo}>
                             <div className={classes.userInfo__userName}>
                                 <div className={classes.userInfo__item}><span>Status: </span> <ProfileStatusWithHooks
-                                    status={props.status} updateUserStatus={props.updateUserStatus}/></div>
+                                    status={props.status} updateUserStatus={props.updateUserStatus} {...props}/></div>
                             </div>
                             <div className={classes.userInfo__userName}>
                                 <div className={classes.userInfo__item}><span>Username: </span>{props.profile.fullName}

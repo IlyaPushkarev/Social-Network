@@ -24,12 +24,15 @@ class ProfileContainer extends React.Component {
         this.props.getUserProfile(userId);
         this.props.getUserStatus(userId);
     }
-
+    checkOwner(){
+        if(this.props.match.params.userId){
+            return +this.props.match.params.userId === +this.props.authorizedUserId
+        }
+        return !!this.props.authorizedUserId
+    }
     componentDidMount() {
-
         // let isAuth = this.props.auth.isAuth;
         this.refreshProfile()
-
     }
 
     componentDidUpdate(prevProps, prevState, snapshot) {
@@ -39,10 +42,10 @@ class ProfileContainer extends React.Component {
     }
 
     render() {
-        // console.log("RENDER profile")
+        // console.log(this.checkOwner())
         return (
             <Profile profile={this.props.profile}
-                     isOwner={!this.props.match.params.userId}
+                     isOwner={this.checkOwner()}
                      {...this.props}
             />
             // <ProfileWithAuth {...this.props} profile={this.props.profile}/>
@@ -55,7 +58,9 @@ let mapStateToProps = (state) => {
     return {
         profile: state.profilePage.profile,
         status: state.profilePage.status,
-        authorizedUserId: state.auth.id
+        authorizedUserId: state.auth.id,
+        isLoadedProfile: state.profilePage.isLoadedProfile,
+        isLoadedStatus: state.profilePage.isLoadedStatus
     }
 }
 

@@ -1,8 +1,10 @@
 import {loginAPI} from "../api/loginAPI";
 import {stopSubmit} from "redux-form";
+import {securityAPI} from "../api/securityAPI";
 // import {finilizeApp} from "./app-reducer";
 
 let SET_USER_DATA = "auth/SET-USER-DATA";
+let GET_CAPTCHA_SUCCESS = "auth/GET_CAPTCHA_SUCCESS";
 
 let initialState = {
     id: null,
@@ -10,6 +12,7 @@ let initialState = {
     login: null,
     isFetching: false,
     isAuth: false,/*проверка логина*/
+    captchaUrl: null
 }
 
 const authReducer = (state = initialState, action)=>{
@@ -20,7 +23,12 @@ const authReducer = (state = initialState, action)=>{
                 ...state,
                 ...action.data,
             };
-
+        case GET_CAPTCHA_SUCCESS:{
+            return {
+                ...state,
+                captchaUrl: action.captchaUrl
+            }
+        }
         default:
             return state;
 
@@ -52,22 +60,39 @@ export const getAuthUserData = ()=>{
 
 
 }
-export const  loginTC = (login, password, rememberMe)=>{
+
+export const  loginTC = (login, password, rememberMe,captchaText)=>{
     return (dispatch)=>{
-
-
-        loginAPI.login(login, password, rememberMe)
+        loginAPI.login(login, password, rememberMe,captchaText)
             .then(response=>{
                 // debugger
                 if(response.data.resultCode === 0){
-
                     dispatch(getAuthUserData())
-                }else{
+                }else {
+                    if(response.data.resultCode === 10) {
+                        dispatch(getCaptchaUrl())
+                        // debugger
+                    }
                     let mes = response.data.messages.length > 0 ? response.data.messages[0] : "Some error"
                     dispatch(stopSubmit("login",{_error: mes}))
                 }
             })
             .catch(err=>console.error(err))
+    }
+}
+
+export const getCaptchaUrlSuccess = (captchaUrl)=>{
+    return{
+        type: GET_CAPTCHA_SUCCESS,
+        captchaUrl
+    }
+}
+export const getCaptchaUrl = ()=>{
+    return async (dispatch,state)=>{
+        const response = await securityAPI.getCaptchaUrl();
+        const captchaUrl = response.data.url;
+        // debugger
+        dispatch(getCaptchaUrlSuccess(captchaUrl))
     }
 }
 
@@ -80,6 +105,8 @@ export const  logoutTC = ()=>{
                      // dispatch(setAuth(false, null));
                      dispatch(setAuthUserData(null, null, null, false));
                      // dispatch(finilizeApp())
+                }else{
+                    alert("Не получилось выйти с аккаунта")
                 }
             })
             .catch(err=>console.error(err))

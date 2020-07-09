@@ -4,11 +4,12 @@ export const loginAPI = {
     getAuthUserData(){
         return API.get(`auth/me`)
     },
-    login: (email, password, rememberMe)=>{
+    login: (email, password, rememberMe,captcha=null)=>{
         return API.post(`auth/login`,{
             email,
             password,
-            rememberMe
+            rememberMe,
+            captcha
         })
     },
     logout(){
