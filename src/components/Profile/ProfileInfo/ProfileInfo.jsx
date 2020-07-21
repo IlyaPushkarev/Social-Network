@@ -46,11 +46,11 @@ const ProfileData = (props) => {
                     <h3>User</h3>
                 </div>
                 <div className={classes.userProfileDescription__body}>
-                    <div className={classes.userAvatar}>
-                        {props.profile.photos.large ? <img src={props.profile.photos.large} alt=""/> :
-                            <img src={userPhoto} alt=""/>}
-                        {props.isOwner && <input type="file" onChange={onLoadMainPhoto}/>}
-                    </div>
+                        <div className={classes.userAvatar}>
+                            {props.profile.photos.large ? <img src={props.profile.photos.large} alt=""/> :
+                                <img src={userPhoto} alt=""/>}
+                            {props.isOwner && <input type="file" onChange={onLoadMainPhoto}/>}
+                        </div>
                     <div className={classes.userInfo}>
                             <div className={classes.userInfo__userName}>
                                 <div className={classes.userInfo__item}><span>Status: </span> <ProfileStatusWithHooks

@@ -43,6 +43,7 @@ class ProfileContainer extends React.Component {
 
     render() {
         // console.log(this.checkOwner())
+        // debugger
         return (
             <Profile profile={this.props.profile}
                      isOwner={this.checkOwner()}
@@ -60,7 +61,7 @@ let mapStateToProps = (state) => {
         status: state.profilePage.status,
         authorizedUserId: state.auth.id,
         isLoadedProfile: state.profilePage.isLoadedProfile,
-        isLoadedStatus: state.profilePage.isLoadedStatus
+        isLoadedStatus: state.profilePage.isLoadedStatus,
     }
 }
 

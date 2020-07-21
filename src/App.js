@@ -41,7 +41,6 @@ class App extends React.Component {
                     <HeaderContainer/>
                     <Navbar/>
                     <div className="app-wrapper-content">
-
                         <Route path="/login" render={() => <LoginContainer/>}/>
 
                         <Route path="/dialogs" render={withSuspense(DialogsContainer) }/>

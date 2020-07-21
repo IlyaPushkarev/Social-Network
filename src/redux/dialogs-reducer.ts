@@ -1,3 +1,5 @@
+import {dialogType, messageType} from "../types/types";
+
 let messages: Array<messageType> = [
     {message: "Hi", id: 1},
     {message: "How are you", id: 2},
@@ -17,15 +19,8 @@ let dialogs: Array<dialogType> = [
     {name: "Ilya", id: 7},
 ];
 
-type dialogType = {
-    name: string,
-    id: number
-}
 
-type messageType = {
-    message: string,
-    id: number
-}
+
 const SEND_MESSAGE = "ADD-MESSAGE";
 
 let initialState = {

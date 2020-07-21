@@ -1,0 +1,259 @@
+import {profileAPI} from "../api/profileAPI";
+import {PostType,PhotosType,ProfileType} from "../types/types"
+
+
+let posts: Array<PostType> = [
+    {message: "Hi, how are you?", id: 1, likesCount: 11, dislikeCount: 5},
+    {message: "It's my first post", id: 2, likesCount: 11, dislikeCount: 5},
+    {message: "Development", id: 3, likesCount: 11, dislikeCount: 5},
+];
+
+const ADD_POST = 'ADD_POST';
+
+const SET_USER_PROFILE = "SET_USER_PROFILE";
+const GET_USER_PROFILE_SUCCESS = "GET_USER_PROFILE_SUCCESS";
+const GET_USER_PROFILE_FAILURE = "GET_USER_PROFILE_FAILURE";
+
+const SET_USER_STATUS = "SET_USER_STATUS";
+const GET_USER_STATUS_SUCCESS = "GET_USER_STATUS_SUCCESS";
+const GET_USER_STATUS_FAILURE = "GET_USER_STATUS_FAILURE";
+
+const DELETE_POST = "DELETE_POST";
+const SAVE_USER_PHOTO_SUCCESS = "SAVE_USER_PHOTO_SUCCESS"
+
+let initialState = {
+    newTextPost:" ",
+    posts,
+    profile: null as ProfileType | null,
+    isLoadedProfile: true,
+    status: "Status is loading",
+    isLoadedStatus: true,
+}
+
+export type initialStateType = typeof initialState
+/*Action types*/
+type inferValueTypes<T> = T extends { [key: string]: infer U } ? U : never
+
+function inferLiteralFromString<T extends string>(arg: T): T {
+    return arg
+}
+
+export const addPostActionCreator = (newPost: string) => {
+    return {
+        type: inferLiteralFromString(ADD_POST),
+        newPost
+    };
+}
+export const deletePostAC = (postId: number) => {
+    return {
+        type: inferLiteralFromString(DELETE_POST),
+        postId
+    }
+}
+
+export const getUserProfileSuccess = () => {
+    return {
+        type: inferLiteralFromString(GET_USER_PROFILE_SUCCESS),
+        // isLoadedProfile: true
+    }
+}
+export const getUserProfileFailure = () => {
+    return {
+        type: inferLiteralFromString(GET_USER_PROFILE_FAILURE),
+        // isLoadedProfile: false
+    }
+}
+export const setUserProfile = (profile:ProfileType) => {
+    return {
+        type: inferLiteralFromString(SET_USER_PROFILE),
+        profile,
+    }
+}
+
+export const getUserStatusSuccess = () => {
+    return {
+        type: inferLiteralFromString(GET_USER_STATUS_SUCCESS),
+        isLoadedStatus: true
+    }
+}
+export const getUserStatusFailure = () => {
+    return {
+        type: inferLiteralFromString(GET_USER_STATUS_FAILURE),
+        sLoadedStatus: false
+    }
+}
+export const setUserStatus = (userStatus:string) => {
+    return {
+        type: inferLiteralFromString(SET_USER_STATUS),
+        userStatus
+    }
+}
+
+export const updateUserPhoto = (photos:PhotosType) => {
+    return {
+        type: inferLiteralFromString(SAVE_USER_PHOTO_SUCCESS),
+        photos,
+    }
+}
+
+const actionCreators = {
+    addPostActionCreator,
+    deletePostAC,
+    getUserProfileSuccess,
+    getUserProfileFailure,
+    setUserProfile,
+    getUserStatusSuccess,
+    getUserStatusFailure,
+    setUserStatus,
+    updateUserPhoto,
+}
+
+type ActionTypes = ReturnType<inferValueTypes<typeof actionCreators>>
+/*/////////////*/
+
+const profileReducer = (state = initialState, action: ActionTypes):initialStateType => {
+    // debugger;
+    switch (action.type) {
+        case ADD_POST:
+            let newPost = {
+                message: action.newPost,
+                id: state.posts.length + 1,
+                likesCount: 3,
+                dislikesCount: 3,
+            };
+
+            return {
+                ...state,
+                posts: [...state.posts, newPost],
+                newTextPost: " "
+            };
+        case DELETE_POST:
+            return {
+                ...state,
+                posts: state.posts.filter(post => post.id !== action.postId)
+            }
+        case GET_USER_PROFILE_FAILURE: {
+            return {
+                ...state,
+                isLoadedProfile: false
+            }
+        }
+        case SET_USER_PROFILE: {
+            return {
+                ...state,
+                isLoadedProfile: true,
+                profile: action.profile
+            }
+        }
+        case GET_USER_STATUS_FAILURE: {
+            return {
+                ...state,
+                isLoadedStatus: false
+            }
+        }
+        case SET_USER_STATUS: {
+            return {
+                ...state,
+                isLoadedStatus: true,
+                status: action.userStatus
+            }
+        }
+
+        case SAVE_USER_PHOTO_SUCCESS: {
+            return {
+                ...state,
+                profile: {
+                    ...state.profile,
+                    photos: action.photos
+                } as ProfileType
+            }
+        }
+        default:
+            return state;
+    }
+}
+
+
+
+export const getUserProfileThunkCreator = (userId:number) => {
+    return (dispatch:Function) => {
+        profileAPI.getUserProfile(userId)
+            .then(response => response.data)
+            .then(data => {
+                // debugger
+                dispatch(getUserProfileSuccess())
+                dispatch(setUserProfile(data));
+            })
+            .catch(() => {
+                dispatch(getUserProfileFailure())
+                // console.log(error)
+            })
+    }
+}
+
+
+
+
+
+export const getUserProfileStatusTC = (userId:number) => {
+    return (dispatch:Function) => {
+        profileAPI.getUserStatus(userId)
+            .then(data => {
+                // debugger;
+                let status = data.data;
+                dispatch(getUserStatusSuccess())
+                dispatch(setUserStatus(status))
+            })
+            .catch(err => {
+                dispatch(getUserStatusFailure())
+                alert(err);
+            })
+    }
+}
+
+export const updateUserProfileStatusTC = (status:string) => {
+    return (dispatch:Function) => {
+        profileAPI.updateUserStatus(status)
+            .then(response => {
+                // debugger;
+                if (response.data.resultCode === 0) {
+                    let status = JSON.parse(response.config.data).status;
+                    // debugger;
+                    dispatch(setUserStatus(status))
+                } else {
+                    console.log(response);
+                }
+            })
+            .catch(err => {
+                alert("Status wasn't update")
+                console.log(err);
+            })
+    }
+}
+
+export const setMainPhotoProfile = (photoSrc:string) => {
+    return async (dispatch:Function) => {
+        const response = await profileAPI.setUserPhoto(photoSrc)
+
+        if (response.data.resultCode === 0) {
+            dispatch(updateUserPhoto(response.data.data.photos))
+        }
+
+        if (response.data.resultCode === 1) {
+            alert("Не удалось загрузить фото")
+        }
+    }
+}
+
+export const updateProfileInfo = (profileInfo:ProfileType, userId:number) => {
+    return async (dispatch:Function) => {
+        const response = await profileAPI.setProfileInfo(profileInfo)
+        // debugger
+        if (response.data.resultCode === 0) {
+            dispatch(getUserProfileThunkCreator(userId))
+        } else {
+            alert("Не удалось обновить анкетные данные")
+        }
+    }
+}
+export default profileReducer;

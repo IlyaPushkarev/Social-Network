@@ -11,6 +11,7 @@ export type initialStateAuthType = {
     isFetching: boolean,
     captchaUrl: string | null
 }
+
 let SET_USER_DATA = "auth/SET-USER-DATA";
 let GET_CAPTCHA_SUCCESS = "auth/GET_CAPTCHA_SUCCESS";
 
@@ -26,7 +27,6 @@ let initialState:initialStateAuthType = {
 const authReducer = (state = initialState, action:any):initialStateAuthType=>{
     switch (action.type) {
         case SET_USER_DATA:
-
             return {
                 ...state,
                 ...action.data,
@@ -42,13 +42,14 @@ const authReducer = (state = initialState, action:any):initialStateAuthType=>{
 
     }
 }
+
 type SetAuthUserDataActionPayloadType = {
     id:number| null,
     email:string| null,
     login:string| null,
     isAuth:boolean| null,
-
 }
+
 type SetAuthUserDataType = {
     type: typeof SET_USER_DATA,
     data:SetAuthUserDataActionPayloadType

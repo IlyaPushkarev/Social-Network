@@ -6,6 +6,8 @@ import {requiredField} from "../../../utils/validators/validators";
 import {Textarea} from "../../common/FormsControls/FormsControls";
 
 let MessageForm = (props)=>{
+    // debugger
+    const { pristine, submitting } = props
 
     return (
         <form onSubmit={props.handleSubmit}>
@@ -14,11 +16,11 @@ let MessageForm = (props)=>{
                        type="text"
                        placeholder="Insert message"
                        component={Textarea}
-                       validate={[requiredField ,]}
+                       validate={[requiredField]}
                 />
             </div>
             <div>
-                <Button text={"SEND"} />
+                <Button text={"SEND"} disabled={pristine || submitting} />
             </div>
         </form>
 

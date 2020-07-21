@@ -1,14 +1,20 @@
 import classes from "./Pagination.module.css"
 import Button from "../Button/Button";
 import React, {useState} from "react";
-
+type PaginatorCreator = {
+    limitionAmountPages: number,
+    totalCountItems: number,
+    pageSize: number,
+    currentPage: number,
+    onChangePage(arg:number):void,
+}
 let endPage = 1,
     startPage = 1,
     amountPages,
-    activePages = [],
+    activePages = [] as Array<number>,
     initialTime = true;
 
-function PaginatorCreate(props) {
+function PaginatorCreate(props:PaginatorCreator) {
     let {
         totalCountItems,
         pageSize,
@@ -50,11 +56,14 @@ function PaginatorCreate(props) {
         }
     }
     // debugger
+
+
     return (
         <div className={classes.pagination}>
             {
                 startPage !== 1
-                && <Button id="btnLeft" onClick={(e) => {
+                && // @ts-ignore
+                 <Button id="btnLeft" onClick={() => {
                     setIsCurrentPageChanged(false)
                     setPaginatorType({type: "left"})
                 }
@@ -65,7 +74,7 @@ function PaginatorCreate(props) {
                 {
                     activePages.map(item => {
                         return <span className={currentPage === item ? classes.selectedPage : ""}
-                                     onClick={(e) => {
+                                     onClick={() => {
                                          onChangePage(item)
                                          setIsCurrentPageChanged(true)
                                      }}
@@ -78,7 +87,8 @@ function PaginatorCreate(props) {
 
             {
                 startPage + limitionAmountPages <= amountPages
-                && <Button id="btnRight" onClick={() => {
+                && // @ts-ignore
+                <Button id="btnRight" onClick={() => {
                     setIsCurrentPageChanged(false)
                     setPaginatorType({type: "right"})
                 }
