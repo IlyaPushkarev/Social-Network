@@ -4,7 +4,7 @@ import {securityAPI} from "../api/securityAPI";
 // import {finilizeApp} from "./app-reducer";
 
 export type initialStateAuthType = {
-    id: number | null,
+    id: string | null,
     email: string | null,
     login: string | null,
     isAuth: boolean,
@@ -54,7 +54,7 @@ type SetAuthUserDataType = {
     type: typeof SET_USER_DATA,
     data:SetAuthUserDataActionPayloadType
 }
-export const setAuthUserData = (userId:number| null, email:string| null, login:string| null, isAuth:boolean,):SetAuthUserDataType=>{
+export const setAuthUserData = (userId:number| null, email:string| null, login:string| null, isAuth:boolean = false,):SetAuthUserDataType=>{
     return {
         type: SET_USER_DATA,
         data:{

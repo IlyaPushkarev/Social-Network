@@ -2,13 +2,18 @@ import React, {useEffect, useState} from "react";
 import classes from "./ProfileStatus.module.css";
 import Button from "../../../common/Button/Button";
 
-const ProfileStatusWithHooks  = (props)=> {
+type PropsType = {
+    statusText: string
+
+    updateStatus:(status:string)=>void
+}
+const ProfileStatusWithHooks: React.FC<PropsType>  = (props)=> {
     let [editMode, setEditMode] = useState(false);
-    let [status, setStatus] = useState(props.status);
+    let [status, setStatus] = useState(props.statusText);
 
     useEffect(()=>{
-       setStatus( props.status)
-    },[props.status])
+       setStatus( props.statusText)
+    },[props.statusText])
 
     const activeEditMode = ()=>{
         setEditMode(true);
@@ -16,12 +21,12 @@ const ProfileStatusWithHooks  = (props)=> {
 
     const deactivateEditMode = ()=>{
         setEditMode(false);
-        if(status !== props.status){
-            props.updateUserStatus(status);
+        if(status !== props.statusText){
+            props.updateStatus(status);
         }
     }
 
-    const  onStatusChange = (e)=>{
+    const  onStatusChange = (e:React.ChangeEvent<HTMLInputElement>)=>{
             setStatus(e.target.value)
     }
         return (
@@ -33,12 +38,12 @@ const ProfileStatusWithHooks  = (props)=> {
                                value={status}
                                onBlur={()=>deactivateEditMode()}
                                onChange={onStatusChange}
-                               maxLength="300"
+                               // maxLength= '300'
                         />
                         <Button text={"ADD status"}/>
                     </div>
                     : <div className={[classes["statusPanel__display"],classes["unselectable"]].join(" ")}>
-                        <span onClick={()=>activeEditMode()}>{props.status ? props.status : "Write status"}</span>
+                        <span onClick={()=>activeEditMode()}>{props.statusText ? props.statusText : "Write status"}</span>
                     </div>
                 }
 

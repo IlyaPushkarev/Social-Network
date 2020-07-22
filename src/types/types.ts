@@ -11,7 +11,10 @@ export type messageType = {
 
 /*PROFILE-REDUCER*/
 export type PostType = {
-    [FieldName: string]: number | string
+    message: string
+    id: number
+    likesCount: number
+    dislikeCount: number
 }
 export type PhotosType = {
     small: string | null,
@@ -19,12 +22,13 @@ export type PhotosType = {
 }
 export type ProfileType = {
     userId: number
+    aboutMe: string
     lookingForAJob: boolean
     lookingForAJobDescription: string
     fullName: string,
-    photos:PhotosType,
+    photos: PhotosType,
     contacts: {
-        [socialName:string]:string
+        [socialName: string]: string
     }
 }
 /*/////////////////////////*/
@@ -33,7 +37,27 @@ export type ProfileType = {
 export type UserType = {
     id: number,
     name: string,
-    status: string,
+    status: string | null,
+    photos: PhotosType
+    followed: boolean | null
 
 }
 /*///////////////////////*/
+
+/*NEWS-REDUCER*/
+export type articleType = {
+    source: {
+        id: null | number,
+        name: string
+    }
+    author: string
+    title: string
+    description: string
+    url: string
+    urlToImage: string
+    publishedAt: string
+    content: string
+
+}
+/*[fieldName:string]:string ,*/
+/*///////////////////////////*/

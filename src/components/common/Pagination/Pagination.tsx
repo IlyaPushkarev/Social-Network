@@ -1,12 +1,13 @@
 import classes from "./Pagination.module.css"
 import Button from "../Button/Button";
 import React, {useState} from "react";
-type PaginatorCreator = {
+
+type PaginatorCreatorType = {
     limitionAmountPages: number,
     totalCountItems: number,
     pageSize: number,
     currentPage: number,
-    onChangePage(arg:number):void,
+    onChangePage(arg: number): void,
 }
 let endPage = 1,
     startPage = 1,
@@ -14,7 +15,7 @@ let endPage = 1,
     activePages = [] as Array<number>,
     initialTime = true;
 
-function PaginatorCreate(props:PaginatorCreator) {
+function PaginatorCreate(props: PaginatorCreatorType) {
     let {
         totalCountItems,
         pageSize,
@@ -23,7 +24,7 @@ function PaginatorCreate(props:PaginatorCreator) {
         limitionAmountPages = 20,
     } = props;
 
-    const pages = [];
+    const pages: Array<number> = [];
     const [isCurrentPageChanged, setIsCurrentPageChanged] = useState(true)
     const [paginatorType, setPaginatorType] = useState({type: "right"})
 
@@ -62,12 +63,13 @@ function PaginatorCreate(props:PaginatorCreator) {
         <div className={classes.pagination}>
             {
                 startPage !== 1
-                && // @ts-ignore
-                 <Button id="btnLeft" onClick={() => {
-                    setIsCurrentPageChanged(false)
-                    setPaginatorType({type: "left"})
-                }
-                } text={"<"}> </Button>
+                &&
+                <Button id="btnLeft"
+                        onClick={() => {
+                            setIsCurrentPageChanged(false)
+                            setPaginatorType({type: "left"})
+                        }
+                        } text={"<"}/>
             }
 
             <div className={classes.numeration}>
@@ -87,12 +89,11 @@ function PaginatorCreate(props:PaginatorCreator) {
 
             {
                 startPage + limitionAmountPages <= amountPages
-                && // @ts-ignore
-                <Button id="btnRight" onClick={() => {
+                &&<Button id="btnRight" onClick={() => {
                     setIsCurrentPageChanged(false)
                     setPaginatorType({type: "right"})
                 }
-                } text={">"}> </Button>
+                } text={">"}/>
             }
         </div>
     )

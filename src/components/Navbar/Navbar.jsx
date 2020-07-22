@@ -3,7 +3,7 @@ import classes from "./Navbar.module.css";
 import {NavLink} from "react-router-dom";
 // import Friends from "./Friends/Friends";
 
-const Navbar = (props) => {
+const Navbar = () => {
 
     return (
 

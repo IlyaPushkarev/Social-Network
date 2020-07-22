@@ -1,11 +1,7 @@
 import {newsAPI} from "../api/newsAPI";
+import {articleType} from "../types/types";
 
-type articleType = {
-    [fieldName:string]:string | object,
-    source: {
-        id: null | number,
-        name: string},
-}
+
 
 const SET_ARTICLES = "SET_ARTICLES";
 

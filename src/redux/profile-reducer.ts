@@ -115,11 +115,11 @@ const profileReducer = (state = initialState, action: ActionTypes):initialStateT
     // debugger;
     switch (action.type) {
         case ADD_POST:
-            let newPost = {
+            let newPost: PostType = {
                 message: action.newPost,
                 id: state.posts.length + 1,
                 likesCount: 3,
-                dislikesCount: 3,
+                dislikeCount: 3,
             };
 
             return {
@@ -175,7 +175,7 @@ const profileReducer = (state = initialState, action: ActionTypes):initialStateT
 
 
 
-export const getUserProfileThunkCreator = (userId:number) => {
+export const getUserProfileThunkCreator = (userId:string) => {
     return (dispatch:Function) => {
         profileAPI.getUserProfile(userId)
             .then(response => response.data)
@@ -195,7 +195,7 @@ export const getUserProfileThunkCreator = (userId:number) => {
 
 
 
-export const getUserProfileStatusTC = (userId:number) => {
+export const getUserProfileStatusTC = (userId:string) => {
     return (dispatch:Function) => {
         profileAPI.getUserStatus(userId)
             .then(data => {
@@ -231,7 +231,7 @@ export const updateUserProfileStatusTC = (status:string) => {
     }
 }
 
-export const setMainPhotoProfile = (photoSrc:string) => {
+export const setMainPhotoProfile = (photoSrc:File) => {
     return async (dispatch:Function) => {
         const response = await profileAPI.setUserPhoto(photoSrc)
 
@@ -245,7 +245,7 @@ export const setMainPhotoProfile = (photoSrc:string) => {
     }
 }
 
-export const updateProfileInfo = (profileInfo:ProfileType, userId:number) => {
+export const updateProfileInfo = (profileInfo:ProfileType, userId:string) => {
     return async (dispatch:Function) => {
         const response = await profileAPI.setProfileInfo(profileInfo)
         // debugger
