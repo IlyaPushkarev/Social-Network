@@ -1,7 +1,7 @@
 import {newsAPI} from "../api/newsAPI";
 import {articleType} from "../types/types";
-
-
+import {ThunkAction} from "redux-thunk";
+import {rootStateType} from "./redux-store";
 
 const SET_ARTICLES = "SET_ARTICLES";
 
@@ -49,12 +49,12 @@ const newsReducer = (state = initialState, action:ActionTypes):initialStateType=
 }
 
 
-export const getNewsThunkCreator = ()=>{
-    return  (dispatch:Function)=>{
+export const getNewsThunkCreator = (): ThunkAction<Promise<void>, rootStateType, unknown, ActionTypes> =>{
+    return  (dispatch)=>{
         return newsAPI.getNewsData()
-            .then((response:any)=>{
+            .then((data)=>{
                 // console.log(response.data)
-                dispatch(setArticlesAC(response.data.articles));
+                dispatch(setArticlesAC(data.articles));
 
             })
     }

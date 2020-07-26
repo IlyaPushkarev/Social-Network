@@ -1,5 +1,7 @@
 import {profileAPI} from "../api/profileAPI";
-import {PostType,PhotosType,ProfileType} from "../types/types"
+import {PostType, PhotosType, ProfileType, ResultCodesEnum} from "../types/types"
+import {ThunkAction} from "redux-thunk";
+import {rootStateType} from "./redux-store";
 
 
 let posts: Array<PostType> = [
@@ -110,6 +112,7 @@ const actionCreators = {
 
 type ActionTypes = ReturnType<inferValueTypes<typeof actionCreators>>
 /*/////////////*/
+type ThunkType = ThunkAction<void, rootStateType, unknown, ActionTypes>
 
 const profileReducer = (state = initialState, action: ActionTypes):initialStateType => {
     // debugger;
@@ -175,14 +178,13 @@ const profileReducer = (state = initialState, action: ActionTypes):initialStateT
 
 
 
-export const getUserProfileThunkCreator = (userId:string) => {
-    return (dispatch:Function) => {
-        profileAPI.getUserProfile(userId)
-            .then(response => response.data)
-            .then(data => {
+export const getUserProfileThunkCreator = (userId:string): ThunkType => {
+    return (dispatch) => {
+        return profileAPI.getUserProfile(userId)
+            .then(profile => {
                 // debugger
                 dispatch(getUserProfileSuccess())
-                dispatch(setUserProfile(data));
+                dispatch(setUserProfile(profile));
             })
             .catch(() => {
                 dispatch(getUserProfileFailure())
@@ -191,16 +193,12 @@ export const getUserProfileThunkCreator = (userId:string) => {
     }
 }
 
-
-
-
-
-export const getUserProfileStatusTC = (userId:string) => {
-    return (dispatch:Function) => {
+export const getUserProfileStatusTC = (userId:string):ThunkType => {
+    return (dispatch) => {
         profileAPI.getUserStatus(userId)
             .then(data => {
                 // debugger;
-                let status = data.data;
+                let status = data;
                 dispatch(getUserStatusSuccess())
                 dispatch(setUserStatus(status))
             })
@@ -211,12 +209,12 @@ export const getUserProfileStatusTC = (userId:string) => {
     }
 }
 
-export const updateUserProfileStatusTC = (status:string) => {
-    return (dispatch:Function) => {
+export const updateUserProfileStatusTC = (status:string):ThunkType => {
+    return (dispatch) => {
         profileAPI.updateUserStatus(status)
             .then(response => {
-                // debugger;
-                if (response.data.resultCode === 0) {
+                debugger;
+                if (response.data.resultCode === ResultCodesEnum.Success) {
                     let status = JSON.parse(response.config.data).status;
                     // debugger;
                     dispatch(setUserStatus(status))
@@ -231,25 +229,25 @@ export const updateUserProfileStatusTC = (status:string) => {
     }
 }
 
-export const setMainPhotoProfile = (photoSrc:File) => {
-    return async (dispatch:Function) => {
-        const response = await profileAPI.setUserPhoto(photoSrc)
-
-        if (response.data.resultCode === 0) {
-            dispatch(updateUserPhoto(response.data.data.photos))
+export const setMainPhotoProfile = (photoSrc:File):ThunkType => {
+    return async (dispatch) => {
+        const obj = await profileAPI.setUserPhoto(photoSrc)
+        debugger
+        if (obj.resultCode === ResultCodesEnum.Success) {
+            dispatch(updateUserPhoto(obj.data.photos))
         }
 
-        if (response.data.resultCode === 1) {
+        if (obj.resultCode === ResultCodesEnum.Error) {
             alert("Не удалось загрузить фото")
         }
     }
 }
 
-export const updateProfileInfo = (profileInfo:ProfileType, userId:string) => {
-    return async (dispatch:Function) => {
-        const response = await profileAPI.setProfileInfo(profileInfo)
-        // debugger
-        if (response.data.resultCode === 0) {
+export const updateProfileInfo = (profileInfo:ProfileType, userId:string): ThunkType => {
+    return async (dispatch) => {
+        const data = await profileAPI.setProfileInfo(profileInfo)
+        debugger
+        if (data.resultCode === ResultCodesEnum.Success) {
             dispatch(getUserProfileThunkCreator(userId))
         } else {
             alert("Не удалось обновить анкетные данные")

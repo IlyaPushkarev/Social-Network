@@ -61,3 +61,12 @@ export type articleType = {
 }
 /*[fieldName:string]:string ,*/
 /*///////////////////////////*/
+
+export enum ResultCodesEnum {
+    Success= 0,
+    Error=1,
+}
+
+export enum ResultCodesForCaptchaEnum {
+    CaptchaIsRequired =10
+}

@@ -8,7 +8,7 @@ import {rootStateType} from "../../redux/redux-store";
 type MapStatePropsType = {
     isAuth:boolean
     login:string | null
-    id:string | null
+    id:number | null
     captchaUrl: string | null
 }
 type MapDispatchPropsType = {
