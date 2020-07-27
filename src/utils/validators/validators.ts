@@ -1,4 +1,6 @@
-export const requiredField = value =>{
+export type FieldValidatorType = (value:string)=>string | undefined
+
+export const requiredField:FieldValidatorType = value =>{
     // debugger
     if(value){
         return undefined
@@ -7,7 +9,7 @@ export const requiredField = value =>{
     }
 }
 
-export const maxLengthCreator = (maxLength)=>{
+export const maxLengthCreator = (maxLength:number):FieldValidatorType=>{
     return (value)=>{
         if(value && value.length > maxLength) return `Max length is ${maxLength} symbols`
 

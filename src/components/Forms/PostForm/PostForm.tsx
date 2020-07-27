@@ -1,12 +1,19 @@
 import React from "react";
-import {Field, reduxForm} from "redux-form";
+import {Field, InjectedFormProps, reduxForm} from "redux-form";
 import Button from "../../common/Button/Button";
 import {maxLengthCreator, requiredField} from "../../../utils/validators/validators";
 import {Textarea} from "../../common/FormsControls/FormsControls";
 
 const maxLength10 = maxLengthCreator(10);
 
-let PostForm = (props)=>{
+export type LoginFormValuesType = {
+    newPost : string
+}
+
+export type LoginOwnFormProps = {
+
+}
+let PostForm:React.FC<InjectedFormProps<LoginFormValuesType,LoginOwnFormProps>&LoginOwnFormProps> = (props)=>{
     return(
         <form onSubmit={props.handleSubmit}>
             <div>
@@ -18,15 +25,15 @@ let PostForm = (props)=>{
 
             </div>
             <div>
-                <Button onClick={props.handleSubmit}
+                <Button onClick={()=>props.handleSubmit}
                         text={"ADD POST"}/>
             </div>
         </form>
     )
 }
 
-PostForm = reduxForm({
+let PostReduxForm = reduxForm<LoginFormValuesType,LoginOwnFormProps>({
     form: "post"
 })(PostForm);
 
-export default PostForm;
+export default PostReduxForm;

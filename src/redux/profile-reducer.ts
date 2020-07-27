@@ -232,7 +232,7 @@ export const updateUserProfileStatusTC = (status:string):ThunkType => {
 export const setMainPhotoProfile = (photoSrc:File):ThunkType => {
     return async (dispatch) => {
         const obj = await profileAPI.setUserPhoto(photoSrc)
-        debugger
+        // debugger
         if (obj.resultCode === ResultCodesEnum.Success) {
             dispatch(updateUserPhoto(obj.data.photos))
         }

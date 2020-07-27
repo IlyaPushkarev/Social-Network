@@ -1,15 +1,19 @@
 import React from "react";
-import {Field, reduxForm} from "redux-form";
+import {Field, InjectedFormProps, reduxForm} from "redux-form";
 import classes from "./LoginForm.module.css";
 import styles from "../../common/FormsControls/FormsControls.module.css";
 import Button from "../../common/Button/Button";
 import {Input} from "../../common/FormsControls/FormsControls";
 import {requiredField} from "../../../utils/validators/validators";
+import {LoginFormValuesType, LoginOwnFormProps} from "../../Login/Login";
 
-const required = value => value ? undefined : 'Required'
 
-let LoginForm = (props)=>{
+const required = (value:string) => value ? undefined : 'Required'
+
+let LoginForm:React.FC<InjectedFormProps<LoginFormValuesType,LoginOwnFormProps>&LoginOwnFormProps> = (props)=>{
     // debugger
+
+
     return (
         <form onSubmit={props.handleSubmit}>
             <div >
@@ -45,15 +49,16 @@ let LoginForm = (props)=>{
                 <Field name={"captchaText"} type={"text"} component={"input"} validate={required}/>
             </div>}
             <div>
-                <Button text={"Login"} onClick={props.handleSubmit}></Button>
+
+                <Button text={"Login"} onClick={()=>props.handleSubmit}/>
                 {/*<button>Login</button>*/}
             </div>
         </form>
 
     )
 }
-LoginForm = reduxForm({
+let LoginReduxForm = reduxForm<LoginFormValuesType,LoginOwnFormProps>({
     form: "login"
 })(LoginForm);
 
-export default  LoginForm;
+export default  LoginReduxForm;

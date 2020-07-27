@@ -3,6 +3,7 @@ import classes from "./Button.module.css";
 
 type ButtonPropsType = {
     id?: string | undefined,
+    // @ts-ignore
     onClick?:()=>void,
     disabled?:boolean,
     style?: object,

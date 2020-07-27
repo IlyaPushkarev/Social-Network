@@ -1,5 +1,5 @@
 import React from "react";
-import Login from "./Login";
+import Login, {LoginFormValuesType} from "./Login";
 import {connect} from "react-redux";
 import {loginTC} from "../../redux/auth-reducer";
 import {Redirect} from "react-router-dom";
@@ -20,8 +20,8 @@ type PropsType = MapStatePropsType & MapDispatchPropsType & OwnPropsType
 class LoginContainer extends React.Component<PropsType> {
     componentDidMount() {
     }
-
-    onSubmit = (formData: { login: string; password: string; rememberMe: boolean; captchaText: string; }) => {
+    //{ login: string; password: string; rememberMe: boolean; captchaText: string; }
+    onSubmit = (formData: LoginFormValuesType) => {
         let {login, password, rememberMe, captchaText} = formData;
         this.props.login(login, password, rememberMe, captchaText);
         // debugger

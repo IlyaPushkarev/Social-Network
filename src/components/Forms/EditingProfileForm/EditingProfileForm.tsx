@@ -1,21 +1,47 @@
 import React from "react";
-import {Field, FormSection, reduxForm} from "redux-form";
+import {Field, FormSection, InjectedFormProps, reduxForm} from "redux-form";
 import {connect} from "react-redux";
+import {ProfileType} from "../../../types/types";
+import {rootStateType} from "../../../redux/redux-store";
+import {WrappedFieldInputProps, WrappedFieldMetaProps} from "redux-form/lib/Field";
 //import {connect} from "react-redux";
-const required = value => {
+const required = (value:string) => {
     // console.log(value)
     return value !== undefined ? undefined : 'Required'
 }
-const maxLength = max => value =>
+const maxLength = (max:number) => (value:string) =>
     value && value.length > max ? `Must be ${max} characters or less` : undefined
 const maxLength55 = maxLength(55)
 
-const minLength = min => value =>
+const minLength = (min:number) => (value:string) =>
     value && value.length < min ? `Must be ${min} characters or more` : undefined
 const minLength2 = minLength(2)
 const minLength10 = minLength(10)
 
-const renderField = ({
+type EditingProfileFormValuesType = ProfileType
+
+type EditingProfileFormOwnPropsType = {
+
+}
+
+type ContactsProfileFormValuesType = {
+    github:string
+    vk:string
+    facebook:string
+    mail:string
+}
+
+type ContactsProfileFormOwnPropsType = {
+
+}
+
+type renderFieldParamsType = {
+    meta: WrappedFieldMetaProps,
+    input: WrappedFieldInputProps,
+    label:string
+    type: string
+}
+const renderField:React.FC<renderFieldParamsType> = ({
                          input,
                          label,
                          type,
@@ -32,7 +58,7 @@ const renderField = ({
     </div>
 )
 
-let Contacts = (props)=>{
+let Contacts:React.FC = (props)=>{
     return(
         <>
             <Field
@@ -56,7 +82,8 @@ let Contacts = (props)=>{
         </>
     )
 }
-let EditingProfileForm = (props)=>{
+
+let EditingProfileForm:React.FC<InjectedFormProps<EditingProfileFormValuesType,EditingProfileFormOwnPropsType>&EditingProfileFormOwnPropsType> = (props)=>{
     const {handleSubmit, submitting,pristine} = props;
 
     return(
@@ -109,7 +136,7 @@ let EditingProfileForm = (props)=>{
 }
 
 
-EditingProfileForm = reduxForm({
+let EditingProfileReduxForm = reduxForm<EditingProfileFormValuesType,EditingProfileFormOwnPropsType>({
     form: "editingProfileForm"
 })(EditingProfileForm)
 
@@ -123,10 +150,19 @@ EditingProfileForm = connect((state) => {
     }
 })(EditingProfileForm)
 */
-EditingProfileForm = connect(
-    state => ({
+
+type MapStatePropsType = {
+    initialValues: ProfileType
+}
+type MapDispatchPropsType = {
+
+}
+type OwnPropsType = {}
+
+let EditingProfileReduxFormWithConnect = connect<{},EditingProfileFormOwnPropsType,{},rootStateType>(
+    (state:rootStateType) => ({
         initialValues: state.profilePage.profile // pull initial values from account reducer
     }),
-)(EditingProfileForm)
+)(EditingProfileReduxForm)
 
-export default EditingProfileForm;
+export default EditingProfileReduxFormWithConnect;
