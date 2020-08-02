@@ -35,7 +35,7 @@ const ProfileStatusWithHooks: React.FC<PropsType>  = (props)=> {
                     ? <div className={classes.statusPanel__editor}>
                         <input type="text"
                                autoFocus={true}
-                               value={status}
+                               value={status?status:""}
                                onBlur={()=>deactivateEditMode()}
                                onChange={onStatusChange}
                                // maxLength= '300'

@@ -9,7 +9,7 @@ import {
 import {withRouter} from "react-router-dom";
 // import {withAuth} from "../HOC/withAuth/withAuth";
 import {compose} from "redux";
-import {withAuth} from "../HOC/withAuth/withAuth";
+// import {withAuth} from "../HOC/withAuth/withAuth";
 import {rootStateType} from "../../redux/redux-store";
 import {ProfileType} from "../../types/types";
 import {RouteComponentProps} from "react-router"
@@ -103,7 +103,7 @@ export default compose<React.ComponentType>(
         updateProfileInfo: updateProfileInfo
     }),
     withRouter,
-    withAuth
+    // withAuth
 )(ProfileContainer)
 
 /*
