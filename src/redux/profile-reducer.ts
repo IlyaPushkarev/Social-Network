@@ -34,8 +34,6 @@ let initialState = {
 
 export type initialStateType = typeof initialState
 /*Action types*/
-type inferValueTypes<T> = T extends { [key: string]: infer U } ? U : never
-
 function inferLiteralFromString<T extends string>(arg: T): T {
     return arg
 }
@@ -109,9 +107,10 @@ const actionCreators = {
     setUserStatus,
     updateUserPhoto,
 }
-
+type inferValueTypes<T> = T extends { [key: string]: infer U } ? U : never
 type ActionTypes = ReturnType<inferValueTypes<typeof actionCreators>>
 /*/////////////*/
+
 type ThunkType = ThunkAction<void, rootStateType, unknown, ActionTypes>
 
 const profileReducer = (state = initialState, action: ActionTypes):initialStateType => {
@@ -213,7 +212,7 @@ export const updateUserProfileStatusTC = (status:string):ThunkType => {
     return (dispatch) => {
         profileAPI.updateUserStatus(status)
             .then(response => {
-                debugger;
+                // debugger;
                 if (response.data.resultCode === ResultCodesEnum.Success) {
                     let status = JSON.parse(response.config.data).status;
                     // debugger;
@@ -246,7 +245,7 @@ export const setMainPhotoProfile = (photoSrc:File):ThunkType => {
 export const updateProfileInfo = (profileInfo:ProfileType, userId:string): ThunkType => {
     return async (dispatch) => {
         const data = await profileAPI.setProfileInfo(profileInfo)
-        debugger
+        // debugger
         if (data.resultCode === ResultCodesEnum.Success) {
             dispatch(getUserProfileThunkCreator(userId))
         } else {

@@ -3,7 +3,7 @@ import classes from "./Dialogs.module.css";
 import DialogItem from "./DialogItem/DialogItem";
 import Message from "./Message/Message";
 import {Redirect} from "react-router-dom";
-import MessageForm, {LoginFormValuesType} from "../Forms/MessageForm/MessageForm";
+import MessageForm, {MessageFormValuesType} from "../Forms/MessageForm/MessageForm";
 import {dialogType, messageType} from "../../types/types";
 
 type DialogsPropsType = {
@@ -19,7 +19,7 @@ const Dialogs = (props: DialogsPropsType) => {
 
     let messagesElements = props.messages.map((m) => <Message message={m.message} key={m.id}/>);
 
-    let onSendMessage = (formData: LoginFormValuesType) => {
+    let onSendMessage = (formData: MessageFormValuesType) => {
         if (formData.newMessage) {
             props.addMessage(formData.newMessage);
             formData.newMessage = "";

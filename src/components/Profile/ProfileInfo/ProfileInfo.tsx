@@ -67,7 +67,7 @@ const ProfileData = (props:ProfileInfoPropsType) => {
         }
     }
     const updateProfileData = (formData:ProfileType)=>{
-        console.log(formData)
+        // console.log(formData)
         props.updateProfileInfo(formData,props.authorizedUserId)
         setIsEditMode(false)
     }

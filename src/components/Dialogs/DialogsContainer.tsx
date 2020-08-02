@@ -1,9 +1,9 @@
-// import React from "react";
+import React from "react";
 import {addMessageActionCreator} from "../../redux/dialogs-reducer";
 import Dialogs from "./Dialogs";
 import {connect} from "react-redux";
-import {withAuth} from "../HOC/withAuth/withAuth";
-import {compose} from "redux";
+// import {withAuth} from "../HOC/withAuth/withAuth";
+import {compose, Dispatch} from "redux";
 import {rootStateType} from "../../redux/redux-store";
 
 
@@ -15,7 +15,7 @@ let mapStateToProps = (state:rootStateType)=>{
         isAuth: state.auth.isAuth,
     }
 }
-let mapDispatchToProps = (dispatch:Function)=>{
+let mapDispatchToProps = (dispatch:Dispatch)=>{
     return {
         addMessage: (newMessage:string)=>{
             dispatch(addMessageActionCreator(newMessage))
@@ -23,8 +23,9 @@ let mapDispatchToProps = (dispatch:Function)=>{
     }
 }
 
-export default compose(
+export default compose<React.ComponentType>(
+    // withAuth,
     connect(mapStateToProps, mapDispatchToProps),
-    withAuth,
+
 )(Dialogs);
 

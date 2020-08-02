@@ -114,8 +114,8 @@ export default connect(mapStateToProps, {/!*Ссылки на функцию(о�
 
 })(UsersContainer);*/
 
-export default compose(
-    // withAuth,
+export default compose<React.ComponentType>(
+
     connect<MapStatePropsType,
         MapDispatchPropsType,
         OwnPropsType,
@@ -125,5 +125,7 @@ export default compose(
         // setCurrentPage: setCurrentPageAC,
         // toggleFollowingProgress,
         getUsers: getUsersThunkCreator/*используеться результат вызова getUsersThunkCreator*/,
-    })
+
+    }),
+    // withAuth,
 )(UsersContainer)

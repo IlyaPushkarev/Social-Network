@@ -1,7 +1,7 @@
 import React from "react";
 import classes from "./MyPosts.module.css";
 import Post from "./Post/Post";
-import PostForm, {LoginFormValuesType} from "../../Forms/PostForm/PostForm";
+import PostForm, {PostFormValuesType} from "../../Forms/PostForm/PostForm";
 import {PostType, ProfileType} from "../../../types/types";
 
 type PropsType = {
@@ -12,7 +12,7 @@ type PropsType = {
 }
 export default React.memo(function MyPosts(props: PropsType) {
 
-    const onAddPost = (formData: LoginFormValuesType) => {
+    const onAddPost = (formData: PostFormValuesType) => {
         props.addPost(formData.newPost);
         formData.newPost = "";
     };

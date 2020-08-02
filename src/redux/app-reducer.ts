@@ -11,9 +11,6 @@ let initialState = {
 
 export type initialStateAppType = typeof initialState;
 
-/*ACTIONS TYPES*/
-type InferValueTypes<T> = T extends {[key:string]: infer U} ? U : never
-
 function inferLiteralFromString<T extends string>(arg:T):T{
     return arg
 }
@@ -36,12 +33,11 @@ const  actionCreators = {
     initializedSuccess,
     finalizedSuccess
 }
-/*type ActionTypes = ReturnType<typeof initializedSuccess> |
-    ReturnType<typeof finalizedSuccess>*/
 
+type InferValueTypes<T> = T extends {[key:string]: infer U} ? U : never
 type ActionTypes = ReturnType<InferValueTypes<typeof actionCreators >>
 
-/*///////////////////////*/
+type ThunkType = ThunkAction<void, rootStateType, unknown, ActionTypes>
 
 const appReducer = (state = initialState, action:ActionTypes):initialStateAppType=>{
     switch (action.type) {
@@ -62,9 +58,7 @@ const appReducer = (state = initialState, action:ActionTypes):initialStateAppTyp
     }
 }
 
-
-
-export const initializeApp = ():ThunkAction<void, rootStateType, unknown, ActionTypes>=>{
+export const initializeApp = ():ThunkType=>{
     return (dispatch)=>{
         let promise = dispatch(getAuthUserData());
         Promise.all([promise]).then(()=>{

@@ -25,11 +25,11 @@ type MapStatePropsType = {
     isLoadedStatus: boolean
 }
 type MapDispatchPropsType = {
-    getUserProfile: ( userId: string)=>void
-    getUserStatus: (userId:string)=>void
-    updateUserStatus: (status:string)=>void
-    savePhoto: (photo:File)=>void
-    updateProfileInfo: (profileInfo: ProfileType,userId: string)=>void
+    getUserProfile: (userId: string) => void
+    getUserStatus: (userId: string) => void
+    updateUserStatus: (status: string) => void
+    savePhoto: (photo: File) => void
+    updateProfileInfo: (profileInfo: ProfileType, userId: string) => void
 }
 type OwnPropsType = {}
 
@@ -41,24 +41,29 @@ class ProfileContainer extends React.Component<PropsType> {
         if (!userId) {
             userId = this.props.authorizedUserId;
             if (!userId) {
+                // debugger
                 this.props.history.push("/login");
+                return
             }
         }
         this.props.getUserProfile(userId);
         this.props.getUserStatus(userId);
+
     }
-    checkOwner(){
-        if(this.props.match.params.userId){
+
+    checkOwner() {
+        if (this.props.match.params.userId) {
             return +this.props.match.params.userId === +this.props.authorizedUserId
         }
         return !!this.props.authorizedUserId
     }
+
     componentDidMount() {
         // let isAuth = this.props.auth.isAuth;
         this.refreshProfile()
     }
 
-    componentDidUpdate(prevProps:PropsType, prevState:MapStatePropsType) {
+    componentDidUpdate(prevProps: PropsType, prevState: MapStatePropsType) {
         if (prevProps.match.params.userId !== this.props.match.params.userId) {
             this.refreshProfile()
         }
@@ -69,7 +74,7 @@ class ProfileContainer extends React.Component<PropsType> {
         // debugger
         return (
             <Profile {...this.props}
-                profile={this.props.profile}
+                     profile={this.props.profile}
                      isOwner={this.checkOwner()}
 
             />
@@ -78,7 +83,7 @@ class ProfileContainer extends React.Component<PropsType> {
     }
 }
 
-let mapStateToProps = (state:rootStateType) => {
+let mapStateToProps = (state: rootStateType) => {
     // console.log("mapStateToPros profile")
     return {
         profile: state.profilePage.profile,
@@ -89,7 +94,7 @@ let mapStateToProps = (state:rootStateType) => {
     }
 }
 
-export default compose(
+export default compose<React.ComponentType>(
     connect(mapStateToProps, {
         getUserProfile: getUserProfileThunkCreator,
         getUserStatus: getUserProfileStatusTC,

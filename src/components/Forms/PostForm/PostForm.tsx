@@ -6,14 +6,14 @@ import {Textarea} from "../../common/FormsControls/FormsControls";
 
 const maxLength10 = maxLengthCreator(10);
 
-export type LoginFormValuesType = {
+export type PostFormValuesType = {
     newPost : string
 }
 
-export type LoginOwnFormProps = {
+export type PostOwnFormProps = {
 
 }
-let PostForm:React.FC<InjectedFormProps<LoginFormValuesType,LoginOwnFormProps>&LoginOwnFormProps> = (props)=>{
+let PostForm:React.FC<InjectedFormProps<PostFormValuesType,PostOwnFormProps>&PostOwnFormProps> = (props)=>{
     return(
         <form onSubmit={props.handleSubmit}>
             <div>
@@ -32,7 +32,7 @@ let PostForm:React.FC<InjectedFormProps<LoginFormValuesType,LoginOwnFormProps>&L
     )
 }
 
-let PostReduxForm = reduxForm<LoginFormValuesType,LoginOwnFormProps>({
+let PostReduxForm = reduxForm<PostFormValuesType,PostOwnFormProps>({
     form: "post"
 })(PostForm);
 

@@ -4,14 +4,14 @@ import Button from "../../common/Button/Button";
 import {requiredField} from "../../../utils/validators/validators";
 import {Textarea} from "../../common/FormsControls/FormsControls";
 
-export type LoginFormValuesType = {
+export type MessageFormValuesType = {
     newMessage : string
 }
 
-export type LoginOwnFormProps = {
+export type MessageOwnFormProps = {
 
 }
-let MessageForm:React.FC<InjectedFormProps<LoginFormValuesType,LoginOwnFormProps>&LoginOwnFormProps> = (props)=>{
+let MessageForm:React.FC<InjectedFormProps<MessageFormValuesType,MessageOwnFormProps>&MessageOwnFormProps> = (props)=>{
     // debugger
     const { pristine, submitting } = props
 
@@ -32,7 +32,7 @@ let MessageForm:React.FC<InjectedFormProps<LoginFormValuesType,LoginOwnFormProps
 
     )
 }
-let MessageReduxForm = reduxForm<LoginFormValuesType,LoginOwnFormProps>({
+let MessageReduxForm = reduxForm<MessageFormValuesType,MessageOwnFormProps>({
     form: "message"
 })(MessageForm);
 

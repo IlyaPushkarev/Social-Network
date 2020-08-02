@@ -1,19 +1,10 @@
 import {loginAPI} from "../api/loginAPI";
-// import {stopSubmit} from "redux-form";
 import {securityAPI} from "../api/securityAPI";
 import {ThunkAction} from "redux-thunk";
 import {rootStateType} from "./redux-store";
 import { ResultCodesEnum, ResultCodesForCaptchaEnum } from "../types/types";
-// import {finilizeApp} from "./app-reducer";
-
-/*export type initialStateAuthType = {
-    id: string | null,
-    email: string | null,
-    login: string | null,
-    isAuth: boolean,
-    isFetching: boolean,
-    captchaUrl: string | null
-}*/
+import {stopSubmit} from "redux-form";
+import {Action} from "redux";
 
 const SET_USER_DATA = "auth/SET-USER-DATA";
 const GET_CAPTCHA_SUCCESS = "auth/GET_CAPTCHA_SUCCESS";
@@ -27,6 +18,39 @@ let initialState = {
     captchaUrl: null as string | null
 }
 export type initialStateAuthType = typeof initialState
+
+function inferLiteralFromString<T extends string>(arg:T):T{
+    return arg
+}
+
+export const setAuthUserData = (userId:number| null, email:string| null, login:string| null, isAuth:boolean = false,)=>{
+    return {
+        type:  inferLiteralFromString(SET_USER_DATA),
+        data:{
+            id: userId,
+            email,
+            login,
+            isAuth,
+        }
+    }
+}
+
+export const getCaptchaUrlSuccess = (captchaUrl:string)=>{
+    return{
+        type:  inferLiteralFromString(GET_CAPTCHA_SUCCESS),
+        captchaUrl
+    }
+}
+
+const actionCreators = {
+    setAuthUserData,
+    getCaptchaUrlSuccess
+}
+
+type InferValueTypes<T> = T extends {[key:string]: infer U} ? U : never
+type ActionsTypes = ReturnType<InferValueTypes<typeof actionCreators >>
+
+type ThunkType = ThunkAction<void, rootStateType, unknown, ActionsTypes | Action>
 
 const authReducer = (state = initialState, action:ActionsTypes):initialStateAuthType=>{
     switch (action.type) {
@@ -46,31 +70,6 @@ const authReducer = (state = initialState, action:ActionsTypes):initialStateAuth
 
     }
 }
-type ThunkType = ThunkAction<void, rootStateType, unknown, ActionsTypes>
-type ActionsTypes = SetAuthUserDataType | GetCaptchaUrlSuccessType
-
-type SetAuthUserDataActionPayloadType = {
-    id:number| null,
-    email:string| null,
-    login:string| null,
-    isAuth:boolean,
-}
-
-type SetAuthUserDataType = {
-    type: typeof SET_USER_DATA,
-    data:SetAuthUserDataActionPayloadType
-}
-export const setAuthUserData = (userId:number| null, email:string| null, login:string| null, isAuth:boolean = false,):SetAuthUserDataType=>{
-    return {
-        type: SET_USER_DATA,
-        data:{
-            id: userId,
-            email,
-            login,
-            isAuth,
-        }
-    }
-}
 
 export const getAuthUserData = ():ThunkType=>{
     return (dispatch)=>{
@@ -87,7 +86,7 @@ export const getAuthUserData = ():ThunkType=>{
 
 }
 
-export const  loginTC = (login:string, password:string, rememberMe:boolean,captchaText:string):ThunkType=>{
+export const  loginTC = (login:string, password:string, rememberMe:boolean,captchaText:string):ThunkType =>{
     return (dispatch)=>{
         return loginAPI.login(login, password, rememberMe,captchaText)
             .then(data=>{
@@ -100,24 +99,14 @@ export const  loginTC = (login:string, password:string, rememberMe:boolean,captc
                         dispatch(getCaptchaUrl())
                         // debugger
                     }
-                    // let mes = response.data.messages.length > 0 ? response.data.messages[0] : "Some error"
-                    // dispatch(stopSubmit("login",{_error: mes}))
+                    let mes = data.messages.length > 0 ? data.messages[0] : "Some error"
+                    dispatch(stopSubmit("login",{_error: mes}))
                 }
             })
             .catch(err=>console.error(err))
     }
 }
 
-type GetCaptchaUrlSuccessType = {
-    type: typeof GET_CAPTCHA_SUCCESS,
-    captchaUrl: string
-}
-export const getCaptchaUrlSuccess = (captchaUrl:string):GetCaptchaUrlSuccessType=>{
-    return{
-        type: GET_CAPTCHA_SUCCESS,
-        captchaUrl
-    }
-}
 export const getCaptchaUrl = ():ThunkType=>{
     return async (dispatch)=>{
         const data = await securityAPI.getCaptchaUrl();
