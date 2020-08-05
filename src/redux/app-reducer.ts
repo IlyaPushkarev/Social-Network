@@ -8,7 +8,6 @@ const INITIALIZED_SUCCESS = "INITIALIZED_SUCCESS",
 let initialState = {
     initialized: false
 }
-
 export type initialStateAppType = typeof initialState;
 
 function inferLiteralFromString<T extends string>(arg:T):T{
@@ -35,7 +34,7 @@ const  actionCreators = {
 }
 
 type InferValueTypes<T> = T extends {[key:string]: infer U} ? U : never
-type ActionTypes = ReturnType<InferValueTypes<typeof actionCreators >>
+export type ActionTypes = ReturnType<InferValueTypes<typeof actionCreators >>
 
 type ThunkType = ThunkAction<void, rootStateType, unknown, ActionTypes>
 
@@ -47,11 +46,13 @@ const appReducer = (state = initialState, action:ActionTypes):initialStateAppTyp
                 initialized: action.initialized,
             }
 
-        case FINALIZED_SUCCESS:
+        /*case FINALIZED_SUCCESS:
+            debugger
+
             return {
                 ...state,
                 initialized: action.initialized
-            }
+            }*/
         default:
             return state;
 
@@ -69,7 +70,8 @@ export const initializeApp = ():ThunkType=>{
 
 /*export const finilizeApp = ()=>{
     return{
-        type:FINALIZED_SUCCESS
+        type:FINALIZED_SUCCESS,
+        initialized:false
     }
 }*/
 export default appReducer;

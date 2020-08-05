@@ -44,7 +44,7 @@ const usersList = [
     currentPage = 1,
     totalUsersCount = 100;
 
-describe("sync action creators",()=>{
+describe("users sync actions",()=>{
 
     it('should create action successful user subscription', function () {
         const userId = 12;

@@ -5,15 +5,17 @@ import {rootStateType} from "./redux-store";
 import { ResultCodesEnum, ResultCodesForCaptchaEnum } from "../types/types";
 import {stopSubmit} from "redux-form";
 import {Action} from "redux";
+// import {finilizeApp} from "./app-reducer";
 
 const SET_USER_DATA = "auth/SET-USER-DATA";
 const GET_CAPTCHA_SUCCESS = "auth/GET_CAPTCHA_SUCCESS";
+const SET_IS_FETCHING_AUTH = 'auth/SET_IS_FETCHING_AUTH'
 
 let initialState = {
     id: null as number | null,
     email: null as string | null,
     login: null as string | null,
-    isFetching: false,
+    isFetchingUserAuthData: false,
     isAuth: false,/*проверка логина*/
     captchaUrl: null as string | null
 }
@@ -42,18 +44,32 @@ export const getCaptchaUrlSuccess = (captchaUrl:string)=>{
     }
 }
 
+export const setIsFetchingAuth = (isFetching:boolean)=>{
+    return{
+        type: inferLiteralFromString(SET_IS_FETCHING_AUTH),
+        isFetchingUserAuthData: isFetching
+    }
+}
+
 const actionCreators = {
     setAuthUserData,
-    getCaptchaUrlSuccess
+    getCaptchaUrlSuccess,
+    setIsFetchingAuth
 }
 
 type InferValueTypes<T> = T extends {[key:string]: infer U} ? U : never
-type ActionsTypes = ReturnType<InferValueTypes<typeof actionCreators >>
+export type ActionsTypes = ReturnType<InferValueTypes<typeof actionCreators >>
 
-type ThunkType = ThunkAction<void, rootStateType, unknown, ActionsTypes | Action>
+type ThunkType = ThunkAction<Promise<void>, rootStateType, unknown, ActionsTypes | Action>
 
 const authReducer = (state = initialState, action:ActionsTypes):initialStateAuthType=>{
     switch (action.type) {
+        case SET_IS_FETCHING_AUTH:{
+            return {
+                ...state,
+                isFetchingUserAuthData: action.isFetchingUserAuthData
+            }
+        }
         case SET_USER_DATA:
             return {
                 ...state,
@@ -73,17 +89,17 @@ const authReducer = (state = initialState, action:ActionsTypes):initialStateAuth
 
 export const getAuthUserData = ():ThunkType=>{
     return (dispatch)=>{
+        dispatch(setIsFetchingAuth(true))
         return loginAPI.getAuthUserData()
             .then(data=>{
+                dispatch(setIsFetchingAuth(false))
                 if(data.resultCode === ResultCodesEnum.Error){
-                    return new Error(data.messages[0])
+                     new Error(data.messages[0])
                 }
                 let {id, email, login} = {...data.data};
                 dispatch(setAuthUserData(id, email, login, true));
             })
     }
-
-
 }
 
 export const  loginTC = (login:string, password:string, rememberMe:boolean,captchaText:string):ThunkType =>{
@@ -123,9 +139,9 @@ export const  logoutTC = ():ThunkType=>{
             .then(data=>{
                 // debugger
                 if(data.resultCode === ResultCodesEnum.Success){
-                     // dispatch(setAuth(false, null));
+                    // dispatch(finilizeApp())
                      dispatch(setAuthUserData(null, null, null, false));
-                     // dispatch(finilizeApp())
+
                 }else{
                     alert("Не получилось выйти с аккаунта")
                 }

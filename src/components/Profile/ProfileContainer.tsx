@@ -13,6 +13,7 @@ import {compose} from "redux";
 import {rootStateType} from "../../redux/redux-store";
 import {ProfileType} from "../../types/types";
 import {RouteComponentProps} from "react-router"
+// import {withAuth} from "../HOC/withAuth/withAuth";
 
 type RouteParamsType = {
     userId: string
